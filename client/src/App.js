@@ -9,6 +9,7 @@ const App = () => {
     <BrowserRouter>
       <Nav />
       <Routes>
+        <Route path="/facechat" exact element={<FaceChat />}></Route>
         <Route path="/login" exact element={<Login />}></Route>
         <Route path="/FaceChat" exact element={<FaceChat />}></Route>
       </Routes>
