@@ -20,19 +20,22 @@ module.exports = new GoogleStrategy(
         // DB에 사용자 저장되어 있지 않으면 새로 저장
         let object = {
             user_email: profile._json && profile._json.email,
-            user_id : profile.id
+            user_id : profile.id, 
+            user_name : profile._json.name
         };
         Model.User.create(object)
         .then((result) => {
             return done(null, profile);
         })
-        .catch((e)=> console.log(e));
+        .catch((e)=> {return console.log(e)});
       }
-      // DB 사용자 정보 있으면 그냥 리턴
-      return done(null, profile);
+      else {
+        // DB 사용자 정보 있으면 그냥 리턴
+        return done(null, profile);
+      }
     })
     .catch(err => {
-      console.log(err);
+      return console.log(err);
     })
   }
 );
