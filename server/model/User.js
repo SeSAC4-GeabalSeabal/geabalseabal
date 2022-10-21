@@ -5,12 +5,12 @@ const User = (Sequelize, DataTypes) => {
     // 컬럼 정의
     {
       user_id: {
-        type: DataTypes.STRING(20), 
+        type: DataTypes.STRING(45), 
         allowNull: false, 
         primaryKey: true, 
       },
       user_name: {
-        type: DataTypes.STRING(6),
+        type: DataTypes.STRING(20),
         allowNull: true, 
       },
       user_email: {

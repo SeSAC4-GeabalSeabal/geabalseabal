@@ -2,6 +2,7 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import { Nav } from './components';
 import Login from './components/login/Login';
+import FaceChat from './components/FaceChat/FaceChat';
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
       <Nav />
       <Routes>
         <Route path="/login" exact element={<Login />}></Route>
+        <Route path="/FaceChat" exact element={<FaceChat />}></Route>
       </Routes>
     </BrowserRouter>
   );
