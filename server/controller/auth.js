@@ -1,10 +1,14 @@
 /* 메인 페이지 */
 exports.getMain = (req, res) => {
+  console.log( req.session ); // 패스포트 세션
+  console.log( req.user ); // 요렇게 써도 사용가능
   res.send('메롱');
 };
 
 /* 로그인 페이지 */
 exports.getLogin = (req, res) => {
+  console.log( req.session ); // 패스포트 세션
+  console.log( req.user ); 
   res.render('login');
 };
 
@@ -17,4 +21,7 @@ exports.getCallback =
   passport.authenticate('google', {
     successRedirect: 'http://localhost:8000', 
     failureRedirect: 'http://localhost:8000/login', // 로그인 실패시
-  });
+  }), 
+  (req, res) => {
+    res.redirect('/')
+  }
