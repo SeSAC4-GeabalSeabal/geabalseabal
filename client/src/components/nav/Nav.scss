@@ -4,16 +4,25 @@
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-    }    
+    }
+    
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
 
 .container{
     position: fixed;
+    //fixed를 쓰고 싶다면,
     left: 0;
     top: 0;
     display: flex;
     justify-content: space-between;
-    background-color: beige;
+    background-color: rgb(244, 244, 239);
     width: 100%;
+    //container에서 100%를 해야 비율이 맞춰진다.
     h2 {
         font-size: 2em;
         font-weight: 400;
@@ -24,17 +33,22 @@
             color: rgb(245, 170, 20);
         }
     }
-    div {
+    .room{
+        margin-left: 65em;
+        margin-top:0.5em;
+    }
+    .login {
         margin-right: 20px;
-        p {
-            text-decoration: none;
-            font-size: 1.5em;
-            font-weight: 400;
-            font-family: 'BMDOHYEON';
-            color: #000;
-            &:hover {
-                cursor: pointer;
-            }
+        margin-top: 0.4em;
+    }
+    p {
+        text-decoration: none;
+        font-size: 1.5em;
+        font-weight: 400;
+        font-family: 'Pretendard-Regular';
+        color: #000;
+        &:hover {
+            cursor: pointer;
         }
     }
 }
