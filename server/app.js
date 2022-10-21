@@ -2,6 +2,14 @@ const express = require('express');
 const app = express(); 
 const passport = require('passport');
 
+/* cors */
+const cors = require('cors');
+const corsQptions = {
+  origin: 'http://localhost:3000', 
+  Credential:true,
+}
+app.use(cors(corsQptions));
+
 /* bodyParser */
 const bodyParser = require('body-parser'); 
 app.use(bodyParser.urlencoded({ extended: false })); 
