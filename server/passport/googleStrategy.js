@@ -1,14 +1,14 @@
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 const Model = require('../model');
 
-passport.use(new GoogleStrategy({
+module.exports = new GoogleStrategy(
+  {
     clientID: process.env.GOOGLE_ID,
     clientSecret: process.env.GOOGLE_SECRET, 
     callbackURL: "http://localhost:8000/login/google/callback",  
   },
-  async function(accessToken, refreshToken, profile, done) {
+  async (accessToken, refreshToken, profile, done) => {
     console.info('___new GoogleStrategy()');
     console.log('___google profile', profile);
     Model.User.findOne({
@@ -35,4 +35,4 @@ passport.use(new GoogleStrategy({
       console.log(err);
     })
   }
-));
+);
