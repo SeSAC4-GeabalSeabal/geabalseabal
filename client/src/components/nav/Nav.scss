@@ -1,0 +1,39 @@
+@font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    }    
+
+.container{
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    background-color: beige;
+    width: 100%;
+    h2 {
+        font-size: 2em;
+        font-weight: 400;
+        margin-left: 1.5em;
+        font-family: 'BMDOHYEON';
+    
+        span{
+            color: rgb(245, 170, 20);
+        }
+    }
+    div {
+        margin-right: 20px;
+        p {
+            text-decoration: none;
+            font-size: 1.5em;
+            font-weight: 400;
+            font-family: 'BMDOHYEON';
+            color: #000;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
