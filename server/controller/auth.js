@@ -19,7 +19,7 @@ const passport = require('../passport/index.js');
 exports.getGoogle =  passport.authenticate('google', { scope: ['email', 'profile']});
 exports.getCallback = 
   passport.authenticate('google', {
-    successRedirect: 'http://localhost:8000', 
+    successRedirect: 'http://localhost:3000', 
     failureRedirect: 'http://localhost:8000/login', // 로그인 실패시
   }), 
   (req, res) => {

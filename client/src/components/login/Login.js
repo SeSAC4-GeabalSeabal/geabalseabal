@@ -1,34 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-// import './FaceChat.scss';
-
+import './Login.scss';
+import axios from 'axios';
 
 const Login = () => {
-
-    const login = () => {
-        return function () {
-          axios({
-            method: "get",
-            url: "localhost:8000/login/google",
-            
-          })
-            .then((res) => { 
-              dispatch(
-                setUser({
-                  email: res.data.email,
-                  nickname: res.data.nickname,
-                })
-              );
-            })
-            .catch((error) => {
-              
-            });
-        };
-      };
-
-    return(
-        <div className="Login">
-            <button onClick={login} />
-        </div>
-    );
+  return(
+    <div className="Login">
+      <a href="http://localhost:8000/login/google">go to googlePassport</a>
+    </div>
+  );
 }
 export default Login;
