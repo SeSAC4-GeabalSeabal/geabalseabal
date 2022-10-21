@@ -9,13 +9,12 @@ exports.getLogin = (req, res) => {
 };
 
 /* passport */
-const passport = require('passport'); 
-require('./passport');
+const passport = require('../passport/index.js'); 
 
 /* 패스포트 로그인 기능 */
 exports.getGoogle = (req, res) => {
   // 프로파일과 이메일 정보를 받는다.
-  passport.authenticate('google', { scope: ['email', 'profile']})
+  passport.authenticate('google', { scope: ['email', 'profile']});
 }
 exports.getCallback = (req, res) => {
   passport.authenticate('google', {
