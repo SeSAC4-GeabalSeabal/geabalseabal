@@ -1,16 +1,14 @@
-const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
-
+const KakaoStrategy = require("passport-kakao").Strategy;
 const Model = require("../model");
 
-module.exports = new GoogleStrategy(
+module.exports = new KakaoStrategy(
   {
-    clientID: process.env.GOOGLE_ID,
-    clientSecret: process.env.GOOGLE_SECRET,
-    callbackURL: "http://localhost:8000/login/google/callback",
+    clientID: process.env.KAKAO_ID,
+    clientSecret: process.env.KAKAO_SECRET,
+    callbackURL: "http://localhost:8000/login/kakao/callback",
   },
   async (accessToken, refreshToken, profile, done) => {
-    console.info("___new GoogleStrategy()");
-    console.log("___google profile", profile);
+    console.info("___new KakaoStrategy()");
     Model.User.findOne({
       where: { user_id: profile.id },
     })
