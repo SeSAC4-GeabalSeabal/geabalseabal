@@ -1,7 +1,12 @@
 const express = require('express');
 const app = express(); 
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const io = require('socket.io')(http, {
+  cors: {
+    origin : "http://localhost:3000", 
+    Credential: true
+  }
+});
 const passport = require('passport');
 
 /* cors */
@@ -36,6 +41,15 @@ app.use(express.urlencoded({extended: true}));
 /* 로그인&인증 경로 */
 const authRouter = require('./routes');
 app.use('/', authRouter);
+
+/* socket.io */
+io.on('connetion', (socket) => {
+  socket.on('join_room', ( roomName ) => {
+    console.log(roomName);
+    socket.join(roomName); // 방 생성
+    socket.to(roomName).emit('welcome');
+  });
+});
 
 /* sever listen */
 sequelize
