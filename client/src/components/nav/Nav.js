@@ -4,7 +4,12 @@ import './Nav.scss';
 const Nav = () => {
     return(
         <div className="container">
-            <h2><span>GAE</span>bal<span>SAE</span>bal</h2>
+            <div className="loco">
+                <Link to="/" style={{ textDecoration: 'none' }}>
+                <h2><span>GAE</span>bal<span>SAE</span>bal</h2>
+                </Link>
+            </div>
+            <div className="btn">
             <div className="room">
                 <Link to="/room" style={{ textDecoration: 'none' }}>
                     <p>Room</p>
@@ -14,6 +19,7 @@ const Nav = () => {
                 <Link to="/login"  style={{ textDecoration: 'none' }}>
                     <p>Login</p>
                 </Link>
+            </div>
             </div>
         </div>
     );
