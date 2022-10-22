@@ -20,7 +20,9 @@
     top: 0;
     display: flex;
     justify-content: space-between;
-    background-color: rgb(244, 244, 239);
+    //background-color: rgb(244, 244, 239);
+    //background: rgb(216, 213, 224);
+    background: rgb(227, 223, 235);
     width: 100%;
     //container에서 100%를 해야 비율이 맞춰진다.
     h2 {
@@ -28,6 +30,7 @@
         font-weight: 400;
         margin-left: 1.5em;
         font-family: 'BMDOHYEON';
+        color: rgb(85,26,139);
     
         span{
             color: rgb(245, 170, 20);
@@ -46,9 +49,9 @@
     p {
         text-decoration: none;
         font-size: 1.5em;
-        font-weight: 400;
+        font-weight: 500;
         font-family: 'Pretendard-Regular';
-        color: #000;
+        color: rgb(52,49,90);
         &:hover {
             cursor: pointer;
         }

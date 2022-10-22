@@ -1,0 +1,25 @@
+.footer {
+    //background: rgb(214, 211, 222);
+    background: rgb(227, 223, 235);
+    color: #fff;
+    padding: 4rem 6rem;
+  }
+  
+  .top {
+    display: flex;
+    align-items: center;
+    text-align: start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  @media screen and (max-width: 850px) {
+    .footer {
+      padding: 4rem 2rem;
+    }
+  
+    .footer i {
+      margin: 1rem 1rem 0 0;
+    }
+  }
+  
