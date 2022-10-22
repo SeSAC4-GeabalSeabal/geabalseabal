@@ -3,9 +3,8 @@ const Model = require("../model");
 
 module.exports = new KakaoStrategy(
   {
-    clientID: process.env.KAKAO_ID,
-    clientSecret: process.env.KAKAO_SECRET,
-    callbackURL: "http://localhost:8000/login/kakao/callback",
+    clientID: process.env.KAKAO_ID, // 카카오 로그인에서 발급받은 REST API 키
+    callbackURL: "http://localhost:8000/login/kakao/callback", // 카카오 로그인 Redirect URI 경로
   },
   async (accessToken, refreshToken, profile, done) => {
     console.info("___new KakaoStrategy()");
