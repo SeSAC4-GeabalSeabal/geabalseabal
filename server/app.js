@@ -59,7 +59,7 @@ sequelize
   // force: ture -> DB 변경사항 덮어씌울건지 -> 새로만들어져서 데이터 초기화
   .then(result => {
       // console.log(result);  // Sequelize 객체 출력
-      app.listen(8000, () => {
+      http.listen(8000, () => {
           console.log('Server start!s');
       });
   })
