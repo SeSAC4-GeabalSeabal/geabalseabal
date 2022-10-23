@@ -20,13 +20,11 @@ const passport = require("../passport/index.js");
 exports.getGoogle = passport.authenticate("google", {
   scope: ["email", "profile"],
 });
-(exports.getCallback = passport.authenticate("google", {
+exports.getCallback = 
+  passport.authenticate("google", {
   successRedirect: "http://localhost:3000",
-  failureRedirect: "http://localhost:8000/login", // 로그인 실패시
-})),
-  (req, res) => {
-    res.redirect("/");
-  };
+  failureRedirect: "http://localhost:3000/login", // 로그인 실패시
+});
 
 /* 카카오 로그인 */
 exports.getKakao = passport.authenticate("kakao", {

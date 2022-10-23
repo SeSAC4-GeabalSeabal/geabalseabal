@@ -53,9 +53,9 @@ io.on('connetion', (socket) => {
 
 /* sever listen */
 sequelize
-  .sync()
+  // .sync()
   // sync -> 모델을 데이터베이스로 동기화해 해당하는 테이블을 생성하고 관계가 있다면 관계도 생성
-  // .sync({ force: true })
+  .sync({ force: true })
   // force: ture -> DB 변경사항 덮어씌울건지 -> 새로만들어져서 데이터 초기화
   .then(result => {
       // console.log(result);  // Sequelize 객체 출력
