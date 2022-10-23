@@ -49,15 +49,14 @@ io.on("connection", (socket) => {
     socket.join(roomName); // 방 생성
     socket.to(roomName).emit("welcome");
   });
-  // ------------------------------------------------------------------------채팅방 메세지. 오류있음!
+  // 채팅방 메세지
   socket.on("send message", (item) => {
     //send message 이벤트 발생
     console.log(item.name + " : " + item.message);
     io.emit("receive message", { name: item.name, message: item.message });
   });
-  //클라이언트에 이벤트를 보냄
 });
-// -------------------------------------------------------------------------
+
 
 /* sever listen */
 sequelize
@@ -66,7 +65,6 @@ sequelize
   // .sync({ force: true })
   // force: ture -> DB 변경사항 덮어씌울건지 -> 새로만들어져서 데이터 초기화
   .then((result) => {
-    // console.log(result);  // Sequelize 객체 출력
     http.listen(8000, () => {
       console.log("Server start!s");
     });
