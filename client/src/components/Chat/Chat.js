@@ -1,86 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import io from 'socket.io-client';
-
-// const socket = io();
-
-// function Chat() {
-//   const [isConnected, setIsConnected] = useState(socket.connected);
-//   const [lastPong, setLastPong] = useState(null);
-
-//   useEffect(() => {
-//     socket.on('connect', () => {
-//       setIsConnected(true);
-//     });
-
-//     socket.on('disconnect', () => {
-//       setIsConnected(false);
-//     });
-
-//     socket.on('pong', () => {
-//       setLastPong(new Date().toISOString());
-//     });
-
-//     return () => {
-//       socket.off('connect');
-//       socket.off('disconnect');
-//       socket.off('pong');
-//     };
-//   }, []);
-
-//   const sendPing = () => {
-//     socket.emit('ping');
-//   }
-
-//   return (
-//     <div>
-//       <p>Connected: { '' + isConnected }</p>
-//       <p>Last pong: { lastPong || '-' }</p>
-//       <button onClick={ sendPing }>Send ping</button>
-//     </div>
-//   );
-// }
-
-// export default Chat;
-
-
-// import React, { useEffect } from "react";
-// import "./Chat.scss";
-// import io from "socket.io-client";
-
-
-// const socket = io.connect("http://localhost:8000", {
-//   cors: {
-//       origin: "*",
-//   }});
-
-// socket.emit("init", { name: "jaehoon" });
-
-
-// function Chat() {
-  
-//   useEffect(() => {
-//     return () => {
-//       socket.close();
-//     };
-//   }, []);
-//   return (
-//     <div className="App">
-//       <div className="Box">
-//         <div className="ChatBox">
-//         </div>
-//         <div className="InputBox">
-//           <input placeholder="내용"></input>
-//           <input placeholder="이름"></input>
-//           <button>등록</button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Chat;
-
-//App.js
 import React, { useCallback, useEffect, useState } from "react";
 import "./Chat.scss";
 import io from "socket.io-client";
@@ -124,10 +41,10 @@ function Chat() {
     <div className="ChatApp">
       <div className="Box">
         <div className="ChatBox">
-          {chatArr.map((ele) => (
+          {chatArr.map((e) => (
             <div className="Chat">
-              <div>{ele.name}</div>
-              <div className="ChatLog">{ele.message}</div>
+              <div>{e.name}</div>
+              <div className="ChatLog">{e.message}</div>
             </div>
           ))}
         </div>
