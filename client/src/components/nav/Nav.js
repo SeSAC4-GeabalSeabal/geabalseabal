@@ -23,6 +23,7 @@ const Nav = () => {
             <div className="logout">
                 <a href='http://localhost:8000/logout' style={{ textDecoration: 'none' }}>
                     <p>Logout</p>
+                    {/* Logout axios(post 방식, url localhost:8000/logout으로 보내기)로 보낸다음에 then-> isLogin false면 다시 메인페이지로 가게 로직 구현해주세요! */}
                 </a>
             </div>
             </div>
