@@ -39,3 +39,9 @@ exports.getKakao = passport.authenticate("kakao", {
   (req, res) => {
     res.redirect("/");
   };
+
+exports.logout = (_, res) => {
+  res.redirect(
+    "https://kauth.kakao.com/oauth/logout?client_id=6ea89a356badf22e749b5a73c47cf51e&logout_redirect_uri=http://localhost:8000/login/kakao/callback"
+  );
+};

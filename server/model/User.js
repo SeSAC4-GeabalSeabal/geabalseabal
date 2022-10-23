@@ -16,6 +16,7 @@ const User = (Sequelize, DataTypes) => {
       user_email: {
         type: DataTypes.STRING(255),
         allowNull: false,
+        defaultValue: "",
       },
       user_image: {
         type: DataTypes.STRING(100),

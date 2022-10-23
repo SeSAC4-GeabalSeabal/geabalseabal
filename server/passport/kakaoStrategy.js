@@ -7,7 +7,7 @@ module.exports = new KakaoStrategy(
     callbackURL: "http://localhost:8000/login/kakao/callback", // 카카오 로그인 Redirect URI 경로
   },
   async (accessToken, refreshToken, profile, done) => {
-    console.info("___new KakaoStrategy()");
+    console.log("kakao profile", profile);
     Model.User.findOne({
       where: { user_id: profile.id },
     })
@@ -16,7 +16,7 @@ module.exports = new KakaoStrategy(
         if (result === null) {
           // DB에 사용자 저장되어 있지 않으면 새로 저장
           let object = {
-            user_email: profile._json && profile._json.email,
+            user_email: profile._json && profile._json.account_email,
             user_id: profile.id,
             user_name: profile._json.name,
           };
@@ -33,7 +33,7 @@ module.exports = new KakaoStrategy(
         }
       })
       .catch((err) => {
-        return console.log(err);
+        return console.error(err);
       });
   }
 );

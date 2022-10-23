@@ -9,5 +9,6 @@ authRouter.get("/login/google", authController.getGoogle); // 구글 passport
 authRouter.get("/login/google/callback", authController.getCallback); // passport callback
 authRouter.get("/login/kakao", authController.getKakao); // 카카오 passport
 authRouter.get("/login/kakao/callback", authController.getKakaoCallback); // passport callback
+authRouter.get("/logout", authController.logout);
 
 module.exports = authRouter;
