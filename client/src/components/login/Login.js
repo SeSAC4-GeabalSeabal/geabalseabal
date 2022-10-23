@@ -20,4 +20,4 @@ export default Login;
       <a href="#" class="social-button" id="facebook-connect"> <span>Connect with Facebook</span></a>
       
       <a href="#" class="social-button" > <span>Connect with LinkedIn</span></a>
-    </div>
+    </div> 
