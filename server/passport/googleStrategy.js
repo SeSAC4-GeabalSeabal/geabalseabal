@@ -19,7 +19,7 @@ module.exports = new GoogleStrategy(
         if (result === null) {
           // DB에 사용자 저장되어 있지 않으면 새로 저장
           let object = {
-            user_email: profile._json && profile._json.email,
+            user_email: profile._json.email,
             user_id: profile.id,
             user_name: profile._json.name,
           };
