@@ -49,6 +49,7 @@ io.on("connetion", (socket) => {
     socket.join(roomName); // 방 생성
     socket.to(roomName).emit("welcome");
   });
+  // ------------------------------------------------------------------------채팅방 메세지. 오류있음!
   socket.on("send message", (item) => {
     //send message 이벤트 발생
     console.log(item.name + " : " + item.message);
@@ -56,6 +57,8 @@ io.on("connetion", (socket) => {
   });
   //클라이언트에 이벤트를 보냄
 });
+// -------------------------------------------------------------------------
+
 /* sever listen */
 sequelize
   .sync()
