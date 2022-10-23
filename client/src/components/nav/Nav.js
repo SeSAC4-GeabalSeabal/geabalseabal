@@ -20,6 +20,11 @@ const Nav = () => {
                     <p>Login</p>
                 </Link>
             </div>
+            <div className="logout">
+                <a href='http://localhost:8000/logout' style={{ textDecoration: 'none' }}>
+                    <p>Logout</p>
+                </a>
+            </div>
             </div>
         </div>
     );
