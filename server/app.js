@@ -60,14 +60,14 @@ io.on("connection", (socket) => {
   // 닉네임 받아와서 소켓에 저장
   socket.on('nickname', (nickname) => (socket['nickname'] = nickname));
   // 새로운 채팅방 메세지 받고(Room 버전)
-  socket.on('new_message', (msg, room, done) => {
+  socket.on('new_message', (msg, room) => {
     // 룸안에 있는 사람들에게만 닉네임, 메세지 함께 전달
     socket.to(room).emit('new_message', `${socket.nickname} : ${msg}`);
   })
   // 먼저 들어온 유저의 offer (local)받는 부분
-  socket.on('first_offer', (offer, roomName) => {
+  socket.on('offer', (offer, roomName) => {
     // 먼저 들어온 유저의 offer (remote) 보내는 부분(나중에 들어온 유저에게)
-    socket.to(roomName).emit('last_offer', offer);
+    socket.to(roomName).emit('offer', offer);
   })
   // 나중 들어온 유저의 answer (local)받는 부분
   socket.on('answer', (answer, roomName) => {
