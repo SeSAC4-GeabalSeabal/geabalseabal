@@ -4,20 +4,19 @@ import io from "socket.io-client";
 
 const socket = io.connect("http://localhost:8000");
 
-
 socket.emit("init", { name: "Sanghoon" });
-
 
 function Chat() {
   const [chatArr, setChatArr] = useState([]);
   const [chat, setChat] = useState({ name: "", message: "" });
-  useEffect(() => {
-    return () => {
-      socket.close();
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     socket.close();
+  //   };
+  // }, []);
   useEffect(() => {
     socket.on("receive message", (message) => {
+      console.log(message);
       setChatArr((chatArr) => chatArr.concat(message));
     }); //receive message이벤트에 대한 콜백을 등록해줌
   }, []);

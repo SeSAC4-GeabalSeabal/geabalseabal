@@ -2,34 +2,25 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import React, { useEffec, useRef } from 'react';
 
-export const socket = io('http://localhost:8000')
-export const SocketContext = React.createContext();
+const socket = io.connect("http://localhost:8000");
 
 const Room = () => {
   const inputRef = useRef(null);
-  // const sendRoom = async () => {
-    // await axios({
-    //   method: 'post',
-    //   url: '/room',
-    //   data: {
-    //       name: ''
-    //   }
-    // });
-    // name 가져오는 거는 아래 input 창 만들고 ref로 연결해서 가져오기
-    // 코딩온 플랫폼의 DOM에 접근하는 ref 수업 듣고 만들어라. 
-  // }
+  // 방제목 입력
   function event() {
     const roomName = inputRef.current.value;
     console.log(inputRef.current.value);
     inputRef.current.value = '';
     socket.emit('join_room', roomName);
-    console.log('시하 바보');
+    console.log('룸 생성 성공');
   };
   return(
-    <div style={{marginTop: "200px"}}>
+    // 방 input
+    <div className="roomData" style={{marginTop: "200px"}}>
       <input type='test' placeholder='방 이름' name='roomName' ref={inputRef}></input>
       <button onClick={ event }>전송</button>
     </div>
+    // 방제목 입력 되면서 방 join되는 부분까지 확인하였고, 방 join되면서 히든 처리해주고 화면공유 부분이랑 채팅 태그로 여기다 추가해주세요~~!! 
   );
 }
 export default Room;
