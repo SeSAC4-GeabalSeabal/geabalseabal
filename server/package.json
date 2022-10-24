@@ -24,7 +24,8 @@
     "passport-local": "^1.0.0",
     "sequelize": "^6.25.3",
     "sequelize-cli": "^6.5.1",
-    "socket.io": "^4.5.3"
+    "socket.io": "^4.5.3",
+    "ws": "^8.9.0"
   },
   "proxy": "http://localhost:8000"
 }
