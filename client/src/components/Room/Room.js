@@ -1,5 +1,6 @@
 import axios from 'axios';
 import io from 'socket.io-client';
+import Chat from '../Chat/Chat'
 import React, { useEffect, useRef, useState } from 'react';
 import GetWebcam from '../getWebCam/GetWebCam';
 
@@ -39,10 +40,13 @@ const Room = () => {
   return(
     // 방 input
     <>
-      <div className="roomData" style={{marginTop: "200px"}}>
-        <input type='test' placeholder='방 이름' name='roomName' ref={inputRef}></input>
-        <button onClick={ event }>전송</button>
-      </div>
+    <div className='RoomApp'>
+    <div className="roomData" style={{marginTop: "200px"}}>
+      <input type='test' placeholder='방 이름' name='roomName' ref={inputRef}></input>
+      <button onClick={ event }>전송</button>
+    </div>
+    <Chat />
+    </div>
       <div>
         <video ref={videoRef} autoPlay /> 
         <button onClick={() => startOrStop()}>{playing? 'Stop':'Start'}</button>
@@ -52,3 +56,4 @@ const Room = () => {
   );
 }
 export default Room;
+
