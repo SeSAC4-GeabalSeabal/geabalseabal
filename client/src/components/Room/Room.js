@@ -8,16 +8,17 @@ const myPeerConnection = new RTCPeerConnection();
 
 const Room = () => {
   const [playing, setPlaying] = useState({ video: false, audio: false });
+  const [roomName, setRoomname] = useState('');
 
   const videoRef = useRef(null); // 비디오
   const inputRef = useRef(null); // 방이름
-
   // 방제목 입력 기능 부분
   function event() {
     const roomName = inputRef.current.children[0].value;
     const NickName = inputRef.current.children[1].value;
     console.log(roomName);
     console.log(NickName);
+    setRoomname(roomName);
     inputRef.current.children[0].value = "";
     inputRef.current.hidden = true;
     // .hidden -> input and button 가리기
@@ -81,7 +82,7 @@ const Room = () => {
           <input type='text' placeholder='닉네임을 정해주세요' name='NickName'></input>
           <button onClick={event}>전송</button>
         </div>
-        <Chat />
+        <Chat socket={socket} roomName={roomName}/>
       </div>
       <div>
         <video ref={videoRef} autoPlay />
