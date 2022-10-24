@@ -1,6 +1,4 @@
-//import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
-//import axios from 'axios';
 import './Nav.scss';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -23,7 +21,7 @@ const Nav = (props ) => {
         <div className="container">
             <div className="loco">
                 <Link to="/" style={{ textDecoration: 'none' }}>
-                <h2><span>GAE</span>bal<span>SAE</span>bal</h2>
+                <h2><span>개</span>발<span>새</span>발</h2>
                 </Link>
             </div>
             <div className="btn">

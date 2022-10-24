@@ -5,6 +5,14 @@
     font-weight: normal;
     font-style: normal;
     }
+
+// @font-face {
+//     font-family: 'SEBANG_Gothic_Bold';
+//     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SEBANG_Gothic_Bold.woff') format('woff');
+//     font-weight: normal;
+//     font-style: normal;
+// }
+
     
 @font-face {
     font-family: 'Pretendard-Regular';
@@ -26,7 +34,7 @@
     width: 100%;
     //container에서 100%를 해야 비율이 맞춰진다.
     h2 {
-        font-size: 2em;
+        font-size: 2.2em;
         font-weight: 400;
         margin-left: 1.5em;
         font-family: 'BMDOHYEON';

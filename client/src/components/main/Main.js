@@ -70,3 +70,6 @@ export default Main;
 // <a href="https://kr.freepik.com/free-photo/3d_30117668.htm#&position=4&from_view=collections">Freepik</a>
 // <a href="https://kr.freepik.com/free-photo/3d_30117670.htm#&position=2&from_view=collections">Freepik</a>
 // <a href="https://kr.freepik.com/free-photo/3d_30117667.htm#&position=3&from_view=collections">Freepik</a>
+
+//<a href="https://www.freepik.com/free-vector/corporate-culture-online-service-platform-corporate-relations-business-ethics-corporate-regulations-compliance-online-partnership-isolated-flat-vector-illustration_25523418.htm#page=7&query=people%20illustration&position=14&from_view=search&track=sph">Image by vector4stock</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/business-team-concept-idea-strategy-achievement-teamwork-team-building-group-people-work-together-business-development-communication-cooperation-vector-flat-illustration_26196021.htm#page=51&query=people%20illustration&position=4&from_view=search&track=sph">Image by vector4stock</a> on Freepik
