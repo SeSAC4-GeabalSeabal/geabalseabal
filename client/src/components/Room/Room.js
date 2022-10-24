@@ -76,25 +76,17 @@ const Room = () => {
     // 방 input
     <>
       <div className="RoomApp">
-        <div
-          className="roomData"
-          id="roomData"
-          style={{ marginTop: "200px" }}
-          ref={inputRef}
-        >
+        <div className="roomData" id="roomData" style={{ marginTop: "200px" }} ref={inputRef}>
           <input type="text" placeholder="방 이름" name="roomName"></input>
+          <input type='text' placeholder='닉네임을 정해주세요' name='NickName'></input>
           <button onClick={event}>전송</button>
         </div>
         <Chat />
       </div>
       <div>
         <video ref={videoRef} autoPlay />
-        <button onClick={() => startOrStop("video")}>
-          {playing["video"] ? "비디오 Stop" : "비디오 Start"}
-        </button>
-        <button onClick={() => startOrStop("audio")}>
-          {playing["audio"] ? "오디오 Stop" : "오디오 Start"}
-        </button>
+        <button onClick={() => startOrStop("video")}>{playing["video"] ? "비디오 Stop" : "비디오 Start"}</button>
+        <button onClick={() => startOrStop("audio")}>{playing["audio"] ? "오디오 Stop" : "오디오 Start"}</button>
       </div>
     </>
   );
