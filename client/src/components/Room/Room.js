@@ -15,11 +15,14 @@ const Room = () => {
 
   function event() {
     const roomName = inputRef.current.children[0].value;
+    const NickName = inputRef.current.children[1].value;
     console.log(roomName);
+    console.log(NickName);
     inputRef.current.children[0].value = '';
     inputRef.current.hidden  = true;
     // .hidden -> input and button 가리기 
     socket.emit('join_room', roomName);
+    socket.emit('nickname', NickName);
     console.log('룸 생성 성공');
    
 
@@ -48,7 +51,8 @@ const Room = () => {
     <>
     <div className='RoomApp'>
     <div className="roomData" id='roomData' style={{marginTop: "200px"}} ref={inputRef}>
-      <input type='test' placeholder='방 이름' name='roomName' ></input>
+      <input type='text' placeholder='방 이름' name='roomName' ></input>
+      <input type='text' placeholder='닉네임을 정해주세요ㅎ' name='NickName'></input>
       <button onClick={ event } >전송</button>
     </div>
     <Chat />
