@@ -12,12 +12,17 @@ const Room = () => {
   const videoRef = useRef(null); // 비디오
   const inputRef = useRef(null); // 방이름
   // 방제목 입력 기능 부분
+
   function event() {
-    const roomName = inputRef.current.value;
-    console.log(inputRef.current.value);
-    inputRef.current.value = '';
+    const roomName = inputRef.current.children[0].value;
+    console.log(roomName);
+    inputRef.current.children[0].value = '';
+    inputRef.current.hidden  = true;
+    // .hidden -> input and button 가리기 
     socket.emit('join_room', roomName);
     console.log('룸 생성 성공');
+   
+
     GetWebcam((stream) => {
       setPlaying(true);
       videoRef.current.srcObject = stream;
@@ -37,13 +42,14 @@ const Room = () => {
     }
     setPlaying(!playing);
   }
+
   return(
     // 방 input
     <>
     <div className='RoomApp'>
-    <div className="roomData" style={{marginTop: "200px"}}>
-      <input type='test' placeholder='방 이름' name='roomName' ref={inputRef}></input>
-      <button onClick={ event }>전송</button>
+    <div className="roomData" id='roomData' style={{marginTop: "200px"}} ref={inputRef}>
+      <input type='test' placeholder='방 이름' name='roomName' ></input>
+      <button onClick={ event } >전송</button>
     </div>
     <Chat />
     </div>
