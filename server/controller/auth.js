@@ -2,7 +2,8 @@
 exports.getMain = (req, res) => {
   console.log(req.session); // 패스포트 세션
   console.log(req.user); // 요렇게 써도 사용가능
-  res.send("메롱");
+  if ( !req.user ) res.send({isLogin: false});
+  else res.send({isLogin: true});
 };
 
 /* 로그인 페이지 */
@@ -40,6 +41,7 @@ exports.getKakao = passport.authenticate("kakao", {
 
 /* 로그아웃 */
 exports.logout = async (req, res) => {
+  console.log( 'logout' );
   try {
     await req.session.destroy();
     return res.send({isLogin: false});
