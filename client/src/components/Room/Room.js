@@ -13,8 +13,8 @@ const Room = () => {
 
   const videoRef = useRef(null); // 비디오
   const inputRef = useRef(null); // 방이름
+  
   // 방제목 입력 기능 부분
-
   function event() {
     const roomName = inputRef.current.children[0].value;
     const NickName = inputRef.current.children[1].value;
@@ -46,14 +46,12 @@ const Room = () => {
     // socket.emit("answer", answer, roomName);
     // console.log("sent the answer");
   });
+  // start, stop 버튼 이벤트
   const startOrStop = (media) => {
     console.log("playing", playing);
-    console.log("media", media);
-    console.log("playing[media]", playing[`${media}`]);
     if (playing[`${media}`]) {
       const s = videoRef.current.srcObject;
       const content = s.getTracks().filter((track) => track.kind == `${media}`);
-      console.log("content", content[0]);
       content[0].stop();
     } else {
       GetWebcam((stream) => {
@@ -62,12 +60,15 @@ const Room = () => {
     }
     changeState(media);
   };
+  // 버튼확인 위하여 setPlaying 값 변환
   const changeState = (media) => {
-    for (const [key, value] of Object.entries(playing)) {
-      if (key == media) playing[key] = !value;
-      else playing[key] = value;
+    // shallow copy & deep copy
+    let origin = JSON.parse(JSON.stringify(playing));
+    for (const [key, value] of Object.entries(origin)) {
+      if (key == media) origin[key] = !value;
+      else origin[key] = value;
     }
-    setPlaying(playing);
+    setPlaying(origin);
   };
   return (
     // 방 input
@@ -87,14 +88,13 @@ const Room = () => {
       <div>
         <video ref={videoRef} autoPlay />
         <button onClick={() => startOrStop("video")}>
-          {playing ? "비디오 Stop" : "비디오 Start"}
+          {playing['video'] ? "비디오 Stop" : "비디오 Start"}
         </button>
         <button onClick={() => startOrStop("audio")}>
-          {playing ? "오디오 Stop" : "오디오 Start"}
+          {playing['audio'] ? "오디오 Stop" : "오디오 Start"}
         </button>
       </div>
     </>
-    // 방제목 입력 되면서 방 join되는 부분까지 확인하였고, 방 join되면서 히든 처리해주고 화면공유 부분이랑 채팅 태그로 여기다 추가해주세요~~!!
   );
 };
 
