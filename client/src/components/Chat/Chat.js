@@ -37,6 +37,7 @@ function Chat() {
     [chat]
   );
   return (
+
     <div className="ChatApp">
       <div className="Box">
         <div className="ChatBox">
@@ -58,3 +59,4 @@ function Chat() {
 }
 
 export default Chat;
+
