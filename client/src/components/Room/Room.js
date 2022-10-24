@@ -4,8 +4,7 @@ import React, { useRef, useState } from "react";
 import GetWebcam from "../getWebCam/GetWebCam";
 
 const socket = io.connect("http://localhost:8000");
-let myPeerConnection = new RTCPeerConnection();
-let roomName;
+const myPeerConnection = new RTCPeerConnection();
 
 const Room = () => {
   const [playing, setPlaying] = useState({ video: false, audio: false });
@@ -30,21 +29,25 @@ const Room = () => {
       setPlaying({ video: true, audio: true });
       videoRef.current.srcObject = stream;
     });
-    // Peer A : make offer
-    const offer = myPeerConnection.createOffer();
-    myPeerConnection.setLocalDescription(offer);
-    console.log("Sent the offer");
-    socket.emit("offer", offer, roomName);
-    // Peer B : answer
-    socket.on("offer", (offer) => {
-      console.log("received the offer");
-      myPeerConnection.setRemoteDescription(offer);
-      const answer = myPeerConnection.createAnswer();
-      myPeerConnection.setLocalDescription(answer);
-      socket.emit("answer", answer, roomName);
-      console.log("sent the answer");
+
+    socket.on("welcome", () => {
+      // Peer A : make offer
+      const offer = myPeerConnection.createOffer();
+      myPeerConnection.setLocalDescription(offer);
+      console.log("Sent the offer");
+      socket.emit("offer", offer, roomName);
+      // Peer B : answer
+      socket.on("offer", (offer, roomName) => {
+        console.log("received offer: ", offer);
+        myPeerConnection.setRemoteDescription(offer);
+        const answer = myPeerConnection.createAnswer();
+        myPeerConnection.setLocalDescription(answer);
+        socket.emit("answer", answer, roomName);
+        console.log("sent the answer");
+      });
     });
   }
+
   // start, stop 버튼 이벤트
   const startOrStop = (media) => {
     console.log("playing", playing);
