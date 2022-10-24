@@ -64,7 +64,7 @@ io.on("connection", (socket) => {
     // 룸안에 있는 사람들에게만 닉네임, 메세지 함께 전달
     socket.to(room).emit("new_message", `${socket.nickname} : ${msg}`);
   });
-  // 먼저 들어온 유저의 offer (local)받는 부분
+  // 먼저 들어온 유저의 offer (local)받는 부분exit
   socket.on("offer", (offer, roomName) => {
     console.log("offer: ", offer);
     // 먼저 들어온 유저의 offer (remote) 보내는 부분(나중에 들어온 유저에게)

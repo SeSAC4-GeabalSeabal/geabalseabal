@@ -1,7 +1,6 @@
-import axios from "axios";
 import io from "socket.io-client";
 import Chat from "../Chat/Chat";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import GetWebcam from "../getWebCam/GetWebCam";
 
 const socket = io.connect("http://localhost:8000");
@@ -13,7 +12,7 @@ const Room = () => {
 
   const videoRef = useRef(null); // 비디오
   const inputRef = useRef(null); // 방이름
-  
+
   // 방제목 입력 기능 부분
   function event() {
     const roomName = inputRef.current.children[0].value;
@@ -31,21 +30,21 @@ const Room = () => {
       setPlaying({ video: true, audio: true });
       videoRef.current.srcObject = stream;
     });
+    // Peer A : make offer
+    const offer = myPeerConnection.createOffer();
+    myPeerConnection.setLocalDescription(offer);
+    console.log("Sent the offer");
+    socket.emit("offer", offer, roomName);
+    // Peer B : answer
+    socket.on("offer", (offer) => {
+      console.log("received the offer");
+      myPeerConnection.setRemoteDescription(offer);
+      const answer = myPeerConnection.createAnswer();
+      myPeerConnection.setLocalDescription(answer);
+      socket.emit("answer", answer, roomName);
+      console.log("sent the answer");
+    });
   }
-  // Peer A : make offer
-  const offer = myPeerConnection.createOffer();
-  myPeerConnection.setLocalDescription(offer);
-  console.log("Sent the offer");
-  socket.emit("offer", offer, roomName);
-  // Peer B : answer
-  socket.on("offer", (offer) => {
-    console.log("received the offer");
-    myPeerConnection.setRemoteDescription(offer);
-    // const answer = myPeerConnection.createAnswer();
-    // myPeerConnection.setLocalDescription(answer);
-    // socket.emit("answer", answer, roomName);
-    // console.log("sent the answer");
-  });
   // start, stop 버튼 이벤트
   const startOrStop = (media) => {
     console.log("playing", playing);
@@ -88,10 +87,10 @@ const Room = () => {
       <div>
         <video ref={videoRef} autoPlay />
         <button onClick={() => startOrStop("video")}>
-          {playing['video'] ? "비디오 Stop" : "비디오 Start"}
+          {playing["video"] ? "비디오 Stop" : "비디오 Start"}
         </button>
         <button onClick={() => startOrStop("audio")}>
-          {playing['audio'] ? "오디오 Stop" : "오디오 Start"}
+          {playing["audio"] ? "오디오 Stop" : "오디오 Start"}
         </button>
       </div>
     </>
