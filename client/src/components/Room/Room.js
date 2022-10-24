@@ -30,11 +30,12 @@ const Room = () => {
     socket.emit("offer", offer, roomName);
     // Peer B : answer
     socket.on("offer", (offer) => {
+      console.log("received the offer");
       myPeerConnection.setRemoteDescription(offer);
       const answer = myPeerConnection.createAnswer();
       myPeerConnection.setLocalDescription(answer);
-      // socket.emit("answer", answer, roomName);
-      // console.log("sent the answer");
+      socket.emit("answer", answer, roomName);
+      console.log("sent the answer");
     });
   }
 

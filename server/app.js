@@ -67,7 +67,6 @@ io.on("connection", (socket) => {
   });
   // 나중 들어온 유저가 먼저 들어온 유저의 offer (local)받는 부분
   socket.on("offer", (offer, roomName) => {
-    console.log("received the offer");
     // 먼저 들어온 유저의 offer (remote) 보내는 부분(나중에 들어온 유저에게)
     socket.to(roomName).emit("offer", offer);
   });
