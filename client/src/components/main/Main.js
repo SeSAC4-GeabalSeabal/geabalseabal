@@ -5,8 +5,19 @@ import Main9 from "../img/Main9.jpg";
 //import Main8 from "../img/Main8.png";
 import Main11 from "../img/Main11.jpg";
 import "./Main.scss";
+import { useEffect } from "react";
+import axios from 'axios';
 
-const Main = () => {
+const Main = ( props ) => {
+    
+  useEffect(() => {
+        axios.get('http://localhost:8000/')
+        .then((result) => {
+            props.setIsLogin(true);
+        });
+    }, []);
+    //로그인이 잘 되었는지 확인.
+
   return (
     <>
     <div className="main">
@@ -54,7 +65,6 @@ const Main = () => {
     </>
   );
 };
-
 export default Main;
 
 // <a href="https://kr.freepik.com/free-photo/3d_30117668.htm#&position=4&from_view=collections">Freepik</a>

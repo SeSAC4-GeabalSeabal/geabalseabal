@@ -3,12 +3,12 @@ import Banner from "../banner/Banner";
 import Main from "../main/Main";
 //import Footer from "../footer/Footer";
 
-function Home() {
+function Home( props ) {
   return (
     <>
-      <Nav />
+      <Nav setIsLogin={props.setIsLogin} isLogin={props.isLogin}/>
       <Banner />
-      <Main />
+      <Main setIsLogin={props.setIsLogin} />
     </>
   );
 }
