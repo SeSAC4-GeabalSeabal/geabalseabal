@@ -1,6 +1,6 @@
 import './Login.scss';
 //import axios from 'axios';
-import Login4 from '../img/Login4.jpg'
+import Login10 from '../img/Login10.jpg'
 
 const Login = () => {
   return(
@@ -11,7 +11,7 @@ const Login = () => {
           <h1>당신을 위한 서비스, 개발새발</h1>
           <p>프리미엄 화상 회의를 이제 누구나 무료로 이용할 수 있습니다.</p>
         </div>
-        <img src={Login4} />
+        <img src={Login10} />
       </div>
       <div className="right">
         <h1>Social Login</h1>
