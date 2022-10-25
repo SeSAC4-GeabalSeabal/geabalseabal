@@ -1,11 +1,16 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
 
 .main {
     margin: 4rem 6rem;
-    color: #2a2a2a;
+    font-family: 'Noto Sans KR', sans-serif;
   }
   
   .main h1 {
-    font-size: 3rem;
+    font-size: 1.7rem;
   }
   
   .first {
@@ -22,10 +27,6 @@
     font-size: 1.1rem;
   }
   
-  .main-text h2 {
-    padding-bottom: 1rem;
-  }
-  
   .image {
     position: relative;
     width: 50%;
@@ -37,9 +38,7 @@
   .image img {
     width: 49%;
     height: 350px;
-    object-fit: cover;
-    border-radius: 6px;
-    box-shadow: -1px 1px 62px -18px rgba(0, 0, 0, 0.19);
+    border-radius: 15px;
   }
   
   .image img:nth-child(2) {
@@ -76,45 +75,47 @@
 
   .skill {
     margin: 4rem 6rem;
-    color: #2a2a2a;
+    font-family: 'Noto Sans KR', sans-serif;
   }
   
   .skill h1 {
-    font-size: 3rem;
+    font-size: 1.7rem;
   }
+
+  // .skill p{
+  //   font-size: 1.2rem;
+  // }
   
   .skillcard {
-    margin-top: 3rem;
+    margin-top: 0px;
     display: flex;
     justify-content: space-between;
   }
   
   .s-card {
-    width: 32%;
+    width: 27%;
     text-align: start;
     box-shadow: 0 5px 25px 2px rgba(0, 0, 0, 0.11);
-    border-radius: 7px;
+    border-radius: 15px;
     cursor: pointer;
     padding: 1rem 0.8rem;
   }
+
+  .s-card:hover  {
+    transform: scale(1.3);
+    overflow: hidden;
+  }
+  
   .s-image {
     height: 200px;
-    overflow: hidden;
-    border-radius: 7px;
   }
   
   .s-image img {
     width: 100%;
     height: 100%;
     border-radius: 7px;
-    transition: 0.3s ease-in-out;
   }
-  
-  .s-card:hover img {
-    transform: scale(1.3);
-    overflow: hidden;
-  }
-  
+
   .s-card h4 {
     font-size: 1.3rem;
     padding: 0.9rem 0 0.2rem 0;
