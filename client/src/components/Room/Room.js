@@ -2,12 +2,14 @@ import io from "socket.io-client";
 import Chat from "../Chat/Chat";
 import React, { useRef, useState } from "react";
 import GetWebcam from "../getWebCam/GetWebCam";
+import GetWebScreen from "../getWebScreen/GetWebScreen";
 
 const socket = io.connect("http://localhost:8000");
 
 const Room = () => {
   console.log(socket);
   const [playing, setPlaying] = useState({ video: false, audio: false });
+  const [Screen, setScreen] = useState(undefined);
   const [roomName, setRoomname] = useState("");
 
   const videoRef = useRef(null); // 비디오
@@ -85,6 +87,9 @@ const Room = () => {
     }
     setPlaying(origin);
   };
+  const screenShare = () => {
+    GetWebScreen();
+  }
   return (
     // 방 input
     <>
@@ -113,6 +118,7 @@ const Room = () => {
         <button onClick={() => startOrStop("audio")}>
           {playing["audio"] ? "오디오 Stop" : "오디오 Start"}
         </button>
+        <button onClick={ screenShare }>화면 공유</button>
       </div>
     </>
   );
