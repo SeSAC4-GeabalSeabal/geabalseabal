@@ -12,143 +12,227 @@
     font-style: normal;
 }
 
-.Login {
-    margin-top: 200px;
-    background-color: aqua;
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
+  .back {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .left {
+    background: rgb(85,26,139);
+    width: 53%;
+    height: 91%;
+    clip-path: polygon(0 0, 100% 0, 90% 90%, 0% 90%);
+    display: flex;
+    flex-direction: column;
+    padding-top: 40px;
+    margin-top: 94px;
     align-items: center;
-    // background: #fff;
-    padding: 20px;
-    max-width: 540px;
-    margin: 25vh auto;
+  }
+  .left > .comment{
+    color: white;
+    font-family: 'Noto Sans KR', sans-serif;
     text-align: center;
-    letter-spacing: 1px;
-    position: relative;
+    margin-bottom: 30px;
+  }
+  
+  .right {
+    background: white;
+    width: 47%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    width: 47%;
+    align-items: center;
+    margin-top: 18%;
+  }
+  .right > h1 {
+    font-family: 'Pretendard-Regular';
+    //margin: 10px;
+  }
+  
+  .right > a {
+    border: none;
+    padding: 15px 50px;
+    background-color: rgb(85,26,139);
+    font-size: 18px;
+    font-weight: bolder;
+    color: white;
+    border-radius: 30px;
+    transition: 0.5s ease-in-out;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  
+  .right > a:hover {
+    box-shadow: 0px 0px 5px 1px black;
+    transition: 0.5s ease-in-out;
+  }
+
+  .right > .kakao {
+    background-color: rgb(243,207,31);
+    color: black;
+    margin-top: 10px;
+    padding: 15px 55px;
+  }
+
+  
+
+//   @media (max-width: 480px) {
+  
+//     .right {
+//       width: 100%;
+//       margin-top: 0px;
+//       padding-top: 30px;
+//       clip-path: polygon(0 0, 100% 0, 90% 90%, 0% 90%);
+//     }
+//   }
+  
+
+
+
+
+// .Login {
+//     margin-top: 200px;
+//     background-color: aqua;
+//     align-items: center;
+//     // background: #fff;
+//     padding: 20px;
+//     max-width: 540px;
+//     margin: 25vh auto;
+//     text-align: center;
+//     letter-spacing: 1px;
+//     position: relative;
  
 
-}
+// }
 
-.Login h2 {
-    margin: 20px 20px 20px 20px;
-    padding: 20px;
-    // text-transform: uppercase;
-    color: #4688F1;
-    font-size: 2em;
-    font-weight: 400;
-    text-align: center;
-    font-family: 'BMDOHYEON';
-}
+// .Login h2 {
+//     margin: 20px 20px 20px 20px;
+//     padding: 20px;
+//     // text-transform: uppercase;
+//     color: #4688F1;
+//     font-size: 2em;
+//     font-weight: 400;
+//     text-align: center;
+//     font-family: 'BMDOHYEON';
+// }
 
-.Loginbox {
-    background-position: 0px 0px;
-    box-sizing: border-box;
-    color: rgb(255, 255, 255);
-    cursor: pointer;
-    display: inline-block;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    vertical-align: middle;
-    width: 100%;
-    border-radius: 3px;
-    margin: 10px auto;
-    outline: rgb(255, 255, 255) none 0px;
+// .Loginbox {
+//     background-position: 0px 0px;
+//     box-sizing: border-box;
+//     color: rgb(255, 255, 255);
+//     cursor: pointer;
+//     display: inline-block;
+//     height: 50px;
+//     line-height: 50px;
+//     text-align: center;
+//     text-decoration: none;
+//     text-transform: uppercase;
+//     vertical-align: middle;
+//     width: 100%;
+//     border-radius: 3px;
+//     margin: 10px auto;
+//     outline: rgb(255, 255, 255) none 0px;
     
-    transition: all 0.2s cubic-bezier(0.72, 0.01, 0.56, 1) 0s;
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    transition: all .3s ease;
-    font-size: 1em;
-    font-weight: 200;
-    font-family: 'BMDOHYEON';
+//     transition: all 0.2s cubic-bezier(0.72, 0.01, 0.56, 1) 0s;
+//     -webkit-transition: all .3s ease;
+//     -moz-transition: all .3s ease;
+//     -ms-transition: all .3s ease;
+//     -o-transition: all .3s ease;
+//     transition: all .3s ease;
+//     font-size: 1em;
+//     font-weight: 200;
+//     font-family: 'BMDOHYEON';
 
-}
+// }
 
-.Loginbox:hover {
-    box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-}
-
-
-// 구글
-#google-connect {
-    background: rgb(255, 255, 255)  no-repeat scroll 5px 0px / 50px 50px padding-box border-box;
-    border: 1px solid rgb(220, 74, 61);
-}
-
-#google-connect:hover {
-    border-color: rgb(220, 74, 61);
-    background: rgb(220, 74, 61)  no-repeat scroll 5px 0px / 50px 50px padding-box border-box;
-    -webkit-transition: all .8s ease-out;
-    -moz-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    transition: all .3s ease-out;
-}
-
-#google-connect span {
-    box-sizing: border-box;
-    color: rgb(220, 74, 61);
-    cursor: pointer;
-    text-align: center;
-    text-transform: uppercase;
-    border: 0px none rgb(220, 74, 61);
-    outline: rgb(255, 255, 255) none 0px;
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    transition: all .3s ease;
-}
-
-#google-connect:hover span {
-    color: #FFF;
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    transition: all .3s ease;
-}
+// .Loginbox:hover {
+//     box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+// }
 
 
-// 카카오
-#kakao-connect {
-    background: rgb(233, 218, 13)  no-repeat scroll 5px 0px / 50px 50px padding-box border-box;
-    border: 1px solid rgb(55, 29, 30);
-}
+// // 구글
+// #google-connect {
+//     background: rgb(255, 255, 255)  no-repeat scroll 5px 0px / 50px 50px padding-box border-box;
+//     border: 1px solid rgb(220, 74, 61);
+// }
 
-#kakao-connect:hover {
-    border-color: rgb(233, 218, 13);
-    background: rgb(55, 29, 30)  no-repeat scroll 5px 0px / 50px 50px padding-box border-box;
-    -webkit-transition: all .8s ease-out;
-    -moz-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    transition: all .3s ease-out;
-}
+// #google-connect:hover {
+//     border-color: rgb(220, 74, 61);
+//     background: rgb(220, 74, 61)  no-repeat scroll 5px 0px / 50px 50px padding-box border-box;
+//     -webkit-transition: all .8s ease-out;
+//     -moz-transition: all .3s ease;
+//     -ms-transition: all .3s ease;
+//     -o-transition: all .3s ease;
+//     transition: all .3s ease-out;
+// }
 
-#kakao-connect span {
-    box-sizing: border-box;
-    color: rgb(55, 29, 30);
-    cursor: pointer;
-    text-align: center;
-    text-transform: uppercase;
-    border: 0px none rgb(233, 218, 13);
-    outline: rgb(55, 29, 30) none 0px;
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    transition: all .3s ease;
-}
+// #google-connect span {
+//     box-sizing: border-box;
+//     color: rgb(220, 74, 61);
+//     cursor: pointer;
+//     text-align: center;
+//     text-transform: uppercase;
+//     border: 0px none rgb(220, 74, 61);
+//     outline: rgb(255, 255, 255) none 0px;
+//     -webkit-transition: all .3s ease;
+//     -moz-transition: all .3s ease;
+//     -ms-transition: all .3s ease;
+//     -o-transition: all .3s ease;
+//     transition: all .3s ease;
+// }
 
-#kakao-connect:hover span {
-    color:  rgb(233, 218, 13);
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    transition: all .3s ease;
-}
+// #google-connect:hover span {
+//     color: #FFF;
+//     -webkit-transition: all .3s ease;
+//     -moz-transition: all .3s ease;
+//     -ms-transition: all .3s ease;
+//     -o-transition: all .3s ease;
+//     transition: all .3s ease;
+// }
+
+
+// // 카카오
+// #kakao-connect {
+//     background: rgb(233, 218, 13)  no-repeat scroll 5px 0px / 50px 50px padding-box border-box;
+//     border: 1px solid rgb(55, 29, 30);
+// }
+
+// #kakao-connect:hover {
+//     border-color: rgb(233, 218, 13);
+//     background: rgb(55, 29, 30)  no-repeat scroll 5px 0px / 50px 50px padding-box border-box;
+//     -webkit-transition: all .8s ease-out;
+//     -moz-transition: all .3s ease;
+//     -ms-transition: all .3s ease;
+//     -o-transition: all .3s ease;
+//     transition: all .3s ease-out;
+// }
+
+// #kakao-connect span {
+//     box-sizing: border-box;
+//     color: rgb(55, 29, 30);
+//     cursor: pointer;
+//     text-align: center;
+//     text-transform: uppercase;
+//     border: 0px none rgb(233, 218, 13);
+//     outline: rgb(55, 29, 30) none 0px;
+//     -webkit-transition: all .3s ease;
+//     -moz-transition: all .3s ease;
+//     -ms-transition: all .3s ease;
+//     -o-transition: all .3s ease;
+//     transition: all .3s ease;
+// }
+
+// #kakao-connect:hover span {
+//     color:  rgb(233, 218, 13);
+//     -webkit-transition: all .3s ease;
+//     -moz-transition: all .3s ease;
+//     -ms-transition: all .3s ease;
+//     -o-transition: all .3s ease;
+//     transition: all .3s ease;
+// }

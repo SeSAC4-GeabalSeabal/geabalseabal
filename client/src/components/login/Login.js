@@ -1,24 +1,42 @@
 import './Login.scss';
-import axios from 'axios';
+//import axios from 'axios';
+import Login4 from '../img/Login4.jpg'
 
 const Login = () => {
   return(
-    <div className="Login">
-      <h2>Social Login</h2>
-      <a href="http://localhost:8000/login/google" className="Loginbox" id="google-connect"> <span>Connect with Google</span></a>
-      <a href="http://localhost:8000/login/kakao" className="Loginbox" id="kakao-connect"> <span>Connect with kakao</span></a>
+    <>
+     <div className="back">
+      <div className="left">
+        <div className="comment">
+          <h1>당신을 위한 서비스, 개발새발</h1>
+          <p>프리미엄 화상 회의를 이제 누구나 무료로 이용할 수 있습니다.</p>
+        </div>
+        <img src={Login4} />
+      </div>
+      <div className="right">
+        <h1>Social Login</h1>
+        <a href="http://localhost:8000/login/google" className="google" style={{ textDecoration: 'none' }}> <span>Connect with Google</span></a>
+        <a href="http://localhost:8000/login/kakao" className="kakao" style={{ textDecoration: 'none' }}> <span>Connect with kakao</span></a>
+      </div>
     </div>
+    {/* <div className="Login">
+        <h2>Social Login</h2>
+        <a href="http://localhost:8000/login/google" className="Loginbox" id="google-connect"> <span>Connect with Google</span></a>
+        <a href="http://localhost:8000/login/kakao" className="Loginbox" id="kakao-connect"> <span>Connect with kakao</span></a>
+    </div> */}
+    </>
   );
 }
 export default Login;
 
 
-<div class="login-box">
+{/* <div class="login-box">
       
       <a href="#" class="social-button" id="facebook-connect"> <span>Connect with Facebook</span></a>
       
       <a href="#" class="social-button" > <span>Connect with LinkedIn</span></a>
-    </div> 
+    </div>  */}
+
 
 //<a href="https://www.freepik.com/free-vector/business-team-putting-together-jigsaw-puzzle-isolated-flat-vector-illustration-cartoon-partners-working-connection-teamwork-partnership-cooperation-concept_10606197.htm#query=people%20illustration&position=9&from_view=keyword">Image by pch.vector</a> on Freepik
 //<a href="https://www.freepik.com/free-vector/business-teambuilding-partnership-teamwork_30002726.htm#query=people%20illustration&position=38&from_view=search&track=sph">Image by upklyak</a> on Freepik
