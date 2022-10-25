@@ -3,21 +3,21 @@ import "./Chat.scss";
 
 function Chat({socket, roomName}) {
   const [chatArr, setChatArr] = useState([]);
-  const [chat, setChat] = useState({ name: "", message: "" });
   const inputRef = useRef(null); // 채팅 내용
   useEffect(() => {
-    // socket.on("receive message", (message) => {
-    //   console.log('message', message);
-    //   setChatArr((chatArr) => chatArr.concat(message));
-    // }); //receive message이벤트에 대한 콜백을 등록해줌
-    socket.on("new_message", (message) => {
-      console.log('message', message);
-      setChatArr((chatArr) => chatArr.concat(message));
-    }); //receive message이벤트에 대한 콜백을 등록해줌
+    // 닉네임 및 메세지 받는 부분
+    socket.on("new_message", (nickname, message) => {
+      let chat = {
+        name : nickname, 
+        message : message
+      }
+      setChatArr((prevList) => [...prevList, chat]);
+    }); 
   }, []);
-  const submit = () => {
+  const submit = async () => {
+    // 메세지 및 룸네임 보내기
     const message = inputRef.current.children[0].value;
-    socket.emit("new_message", message, roomName); 
+    await socket.emit("new_message", message, roomName); 
   }
   return (
     <div className="ChatApp">
