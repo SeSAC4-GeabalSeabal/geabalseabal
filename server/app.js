@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
   // 새로운 채팅방 메세지 받고(Room 버전)
   socket.on("new_message", (msg, room) => {
     // 룸안에 있는 사람들에게만 닉네임, 메세지 함께 전달
-    socket.to(room).emit("new_message", `${socket.nickname} : ${msg}`);
+    io.to(room).emit("new_message", socket.nickname, msg);
   });
   // 먼저 들어온 유저의 offer (local)받는 부분exit
   socket.on("offer", (offer, roomName) => {

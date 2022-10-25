@@ -6,6 +6,7 @@ import GetWebcam from "../getWebCam/GetWebCam";
 const socket = io.connect("http://localhost:8000");
 
 const Room = () => {
+  console.log(socket);
   const [playing, setPlaying] = useState({ video: false, audio: false });
   const [roomName, setRoomname] = useState("");
 
@@ -15,16 +16,13 @@ const Room = () => {
   function event() {
     const roomName = inputRef.current.children[0].value;
     const NickName = inputRef.current.children[1].value;
-    console.log(roomName);
-    console.log(NickName);
     setRoomname(roomName);
     inputRef.current.children[0].value = "";
     inputRef.current.hidden = true;
     // .hidden -> input and button 가리기
     socket.emit("join_room", roomName);
     socket.emit("nickname", NickName);
-    console.log("룸 생성 성공");
-
+    // 캠 공유 시작
     GetWebcam((stream) => {
       setPlaying({ video: true, audio: true });
       videoRef.current.srcObject = stream;
@@ -105,7 +103,7 @@ const Room = () => {
           ></input>
           <button onClick={event}>전송</button>
         </div>
-        <Chat socket={socket} roomName={roomName} />
+        <Chat socket={ socket } roomName={roomName}/>
       </div>
       <div>
         <video ref={videoRef} autoPlay />
