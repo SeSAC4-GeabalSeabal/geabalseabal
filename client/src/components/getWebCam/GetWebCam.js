@@ -4,7 +4,7 @@ const GetWebcam = async (callback) => {
   try {
     const constraints = {
         'video': true, 
-        'audio': true, 
+        'audio': false, 
     }
     navigator.mediaDevices.getUserMedia(constraints)
       .then(callback);
