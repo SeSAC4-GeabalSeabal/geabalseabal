@@ -4,12 +4,11 @@ import React, { useRef, useState } from "react";
 import GetWebcam from "../getWebCam/GetWebCam";
 
 const socket = io.connect("http://localhost:8000");
-const myPeerConnection = new RTCPeerConnection();
 
 const Room = () => {
   console.log(socket);
   const [playing, setPlaying] = useState({ video: false, audio: false });
-  const [roomName, setRoomname] = useState('');
+  const [roomName, setRoomname] = useState("");
 
   const videoRef = useRef(null); // 비디오
   const inputRef = useRef(null); // 방이름
@@ -28,22 +27,37 @@ const Room = () => {
       setPlaying({ video: true, audio: true });
       videoRef.current.srcObject = stream;
     });
-
-    socket.on("welcome", () => {
+    //RTC code
+    function makeConnection() {
+      let myPeerConnection = new RTCPeerConnection();
+      console.log(
+        GetWebcam.getTracks().forEach((track) =>
+          myPeerConnection.addTrack(track, GetWebcam)
+        )
+      );
+    }
+    // Socket code
+    socket.on("welcome", async () => {
+      console.log("welcome");
       // Peer A : make offer
-      const offer = myPeerConnection.createOffer();
+      const myPeerConnection = new RTCPeerConnection();
+      const offer = await myPeerConnection.createOffer();
       myPeerConnection.setLocalDescription(offer);
-      console.log("Sent the offer");
       socket.emit("offer", offer, roomName);
-      // Peer B : answer
-      socket.on("offer", (offer, roomName) => {
-        console.log("received offer: ", offer);
-        myPeerConnection.setRemoteDescription(offer);
-        const answer = myPeerConnection.createAnswer();
-        myPeerConnection.setLocalDescription(answer);
-        socket.emit("answer", answer, roomName);
-        console.log("sent the answer");
-      });
+      console.log("sent offer: ", offer);
+    });
+    // Peer B : answer
+    socket.on("offer", async (offer) => {
+      const myPeerConnection = new RTCPeerConnection();
+      console.log("received offer: ", offer);
+      myPeerConnection.setRemoteDescription(offer);
+      const answer = await myPeerConnection.createAnswer();
+      myPeerConnection.setLocalDescription(answer);
+      socket.emit("answer", answer, roomName);
+      console.log("sent the answer: ", answer);
+    });
+    socket.on("answer", async (answer) => {
+      console.log("got answer: ", answer);
     });
   }
 
@@ -75,17 +89,30 @@ const Room = () => {
     // 방 input
     <>
       <div className="RoomApp">
-        <div className="roomData" id="roomData" style={{ marginTop: "200px" }} ref={inputRef}>
+        <div
+          className="roomData"
+          id="roomData"
+          style={{ marginTop: "200px" }}
+          ref={inputRef}
+        >
           <input type="text" placeholder="방 이름" name="roomName"></input>
-          <input type='text' placeholder='닉네임을 정해주세요' name='NickName'></input>
+          <input
+            type="text"
+            placeholder="닉네임을 정해주세요"
+            name="NickName"
+          ></input>
           <button onClick={event}>전송</button>
         </div>
         <Chat socket={ socket } roomName={roomName}/>
       </div>
       <div>
         <video ref={videoRef} autoPlay />
-        <button onClick={() => startOrStop("video")}>{playing["video"] ? "비디오 Stop" : "비디오 Start"}</button>
-        <button onClick={() => startOrStop("audio")}>{playing["audio"] ? "오디오 Stop" : "오디오 Start"}</button>
+        <button onClick={() => startOrStop("video")}>
+          {playing["video"] ? "비디오 Stop" : "비디오 Start"}
+        </button>
+        <button onClick={() => startOrStop("audio")}>
+          {playing["audio"] ? "오디오 Stop" : "오디오 Start"}
+        </button>
       </div>
     </>
   );
