@@ -5,12 +5,13 @@
 }
 
 .main {
-    margin: 4rem 6rem;
+    //margin: 4rem 6rem;
+    margin: 10vh 10vh;
     font-family: 'Noto Sans KR', sans-serif;
   }
   
   .main h1 {
-    font-size: 1.7rem;
+    font-size: 1.9rem;
   }
   
   .first {
@@ -24,7 +25,7 @@
   .main-text {
     width: 45%;
     text-align: start;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
   
   .image {
@@ -38,12 +39,12 @@
   .image img {
     width: 49%;
     height: 350px;
-    border-radius: 15px;
+    border-radius: 1000px;
   }
   
   .image img:nth-child(2) {
     position: absolute;
-    top: -10%;
+    bottom: -15%;
     right: 0;
   }
   
@@ -79,12 +80,12 @@
   }
   
   .skill h1 {
-    font-size: 1.7rem;
+    font-size: 1.9rem;
   }
 
-  // .skill p{
-  //   font-size: 1.2rem;
-  // }
+  .skill p{
+    font-size: 1.2rem;
+  }
   
   .skillcard {
     margin-top: 0px;
@@ -94,20 +95,19 @@
   
   .s-card {
     width: 27%;
-    text-align: start;
+    text-align: center;
     box-shadow: 0 5px 25px 2px rgba(0, 0, 0, 0.11);
-    border-radius: 15px;
+    border-radius: 20px;
     cursor: pointer;
     padding: 1rem 0.8rem;
+    margin-top: 1.2vh;
+
   }
 
   .s-card:hover  {
-    transform: scale(1.3);
+    transform: scale(1.1);
     overflow: hidden;
-  }
-  
-  .s-image {
-    height: 200px;
+
   }
   
   .s-image img {
@@ -116,22 +116,28 @@
     border-radius: 7px;
   }
 
-  .s-card h4 {
-    font-size: 1.3rem;
-    padding: 0.9rem 0 0.2rem 0;
+  .s-card h4{
+    font-size: 1.4rem;
+  }
+
+  .s-card p{
+    font-size: 1.2rem;
   }
   
   @media screen and (max-width: 850px) {
     .skill {
-      margin: 4rem 2rem;
+      //margin: 4rem 2rem;
+      margin: 1vh 1vh;
     }
     .skillcard {
-      margin-top: 3rem;
+      //margin-top: 3rem;
+      margin-top: 1vh;
       display: flex;
       flex-direction: column;
     }
     .s-card {
-      margin-bottom: 1.5rem;
+      //margin-bottom: 1.5rem;
+      margin-bottom: 1vh;
       width: 100%;
     }
   }
