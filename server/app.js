@@ -73,7 +73,6 @@ io.on("connection", (socket) => {
 
   // 먼저 들어온 유저의 offer (local)받는 부분exit
   socket.on("offer", (offer, roomName) => {
-    console.log("offer: ", offer);
     // 먼저 들어온 유저의 offer (remote) 보내는 부분(나중에 들어온 유저에게)
     socket.to(roomName).emit("offer", offer);
   });
@@ -82,6 +81,11 @@ io.on("connection", (socket) => {
   socket.on("answer", (answer, roomName) => {
     // 나중 들어온 유저의 answer (remote) 보내는 부분(먼저 들어온 유저에게)
     socket.to(roomName).emit("answer", answer);
+  });
+
+  // iceCandidate
+  socket.on('ice', (ice, roomName) => {
+    socket.to(roomName).emit('ice', ice);
   });
 
   // 연결 끊어지기 직전에 bye 메세지 전송
