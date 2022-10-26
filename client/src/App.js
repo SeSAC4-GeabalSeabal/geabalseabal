@@ -1,7 +1,6 @@
 
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import { Nav, Login } from './components';
-import FaceChat from './components/FaceChat/FaceChat';
 import Room from './components/Room/Room';
 import Home from './components/home/Home';
 // import Chat from './components/Chat/Chat';
@@ -17,7 +16,6 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home setIsLogin={setIsLogin} isLogin={isLogin} />}></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/FaceChat" element={<FaceChat />}></Route>
         <Route path='/Room' element={<Room />}></Route>
         {/* <Route path='/chat' element={<Chat />}></Route> */}
       </Routes>
