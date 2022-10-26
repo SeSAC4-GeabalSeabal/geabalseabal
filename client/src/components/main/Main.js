@@ -13,7 +13,8 @@ const Main = ( props ) => {
   useEffect(() => {
         axios.get('http://localhost:8000/')
         .then((result) => {
-            props.setIsLogin(true);
+            console.log( result );
+            props.setIsLogin(result.data.isLogin);
         });
     }, []);
     //로그인이 잘 되었는지 확인.
