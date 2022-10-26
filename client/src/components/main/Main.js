@@ -13,7 +13,8 @@ const Main = ( props ) => {
   useEffect(() => {
         axios.get('http://localhost:8000/')
         .then((result) => {
-            props.setIsLogin(true);
+            console.log( result );
+            props.setIsLogin(result.data.isLogin);
         });
     }, []);
     //로그인이 잘 되었는지 확인.
@@ -21,12 +22,13 @@ const Main = ( props ) => {
   return (
     <>
     <div className="main">
-        <h1>모든 사용자를 위한 영상 통화 및 화상 회의</h1>
-        <p>GEAbalSEAbal은 기기 종류와 관계없이 모든 사용자에게 안전하고 품질이 우수한 화상 회의와 영상 통화 기능을 제공하는 서비스입니다</p>
         <div className="first">
             <div className="main-text">
-                <h2>화상 회의</h2>
-                <p>EAbalSEAbal은 기기 종류와 관계없이 모든 사용자에게 안전하고 품질이 우수한 화상 회의와 영상 통화 기능을 제공하는 서비스입니다</p>
+                <h1>모든 사용자를 위한 영상 통화 및 화상 회의</h1>
+                <p>개발새발은 기기 종류와 관계없이 모든 사용자에게 안전하고 품질이 우수한 화상 회의와 영상 통화 기능을 제공하는 서비스입니다.</p>
+                <h1>개발새발은 여러분을 위한 것입니다.</h1>
+                <p>개발새발은 사용자가 연결하고, 커뮤니케이션하고, 아이디어를 표현함으로써 모두가 함께 더 많은 일을 성취할 수 있도록 지원합니다. 
+                    수백만의 대기업, 중소기업 및 여러분과 같은 수많은 개인 사용자의 신뢰를 받고 있다는 것이 자랑스럽습니다.</p>
             </div>
             <div className="image">
                 <img src={Main10} alt="img" />
@@ -36,29 +38,28 @@ const Main = ( props ) => {
     </div>
 
     <div className="skill">
-        <h1>Skills</h1>
-        <p>A better way for your remote team to Cowork togehter</p>
+        <h1>주요 기능</h1>
         <div className="skillcard">
-            <div className="s-card">
-                <div className="s-img">
-                    <img src={Main11} alt="skill" />
-                </div>
-                <h4>skill</h4>
-                <p>이용하세요.</p>
-            </div>
             <div className="s-card">
                 <div className="s-img">
                     <img src={Main10} alt="skill" />
                 </div>
-                <h4>skill</h4>
-                <p>이용하세요.</p>
+                <h4>화상 회의</h4>
+                <p>언제 어디서든 자유롭게 화상 회의를 진행할 수 있습니다. </p>
+            </div>
+            <div className="s-card">
+                <div className="s-img">
+                    <img src={Main11} alt="skill" />
+                </div>
+                <h4>화면 공유</h4>
+                <p>화면 공유를 통해 더 원활한 회의를 지원합니다.</p>
             </div>
             <div className="s-card">
                 <div className="s-img">
                     <img src={Main9} alt="skill" />
                 </div>
-                <h4>skill</h4>
-                <p>이용하세요.</p>
+                <h4>실시간 채팅</h4>
+                <p>코드 블럭과 코드 펜까지 사용 가능한 개발새발만의 주요 기능입니다.</p>
             </div>
         </div>
     </div>
