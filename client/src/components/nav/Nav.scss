@@ -26,7 +26,8 @@
     //fixed를 쓰고 싶다면,
     left: 0;
     top: 0;
-    z-index: 1; //네브바 고정, 앞
+    z-index: 1; 
+    //네브바 고정, 모든 content 위(앞)으로
     display: flex;
     justify-content: space-between;
     //background-color: rgb(244, 244, 239);
