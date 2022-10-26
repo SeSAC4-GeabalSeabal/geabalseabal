@@ -7,9 +7,7 @@ import GetWebScreen from "../getWebScreen/GetWebScreen";
 const socket = io.connect("http://localhost:8000");
 
 const Room = () => {
-  console.log(socket);
-  const [playing, setPlaying] = useState({ video: false, audio: false });
-  const [Screen, setScreen] = useState(undefined);
+  const [playing, setPlaying] = useState({ video: true, audio: true });
   const [roomName, setRoomname] = useState("");
 
   const videoRef = useRef(null); // 비디오
@@ -25,8 +23,7 @@ const Room = () => {
     socket.emit("join_room", roomName);
     socket.emit("nickname", NickName);
     // 캠 공유 시작
-    GetWebcam((stream) => {
-      setPlaying({ video: true, audio: true });
+    GetWebcam(playing, (stream) => {
       videoRef.current.srcObject = stream;
     });
     //RTC code
@@ -65,13 +62,14 @@ const Room = () => {
 
   // start, stop 버튼 이벤트
   const startOrStop = (media) => {
-    console.log("playing", playing);
     if (playing[`${media}`]) {
       const s = videoRef.current.srcObject;
       const content = s.getTracks().filter((track) => track.kind == `${media}`);
       content[0].stop();
     } else {
-      GetWebcam((stream) => {
+      let data = JSON.parse(JSON.stringify(playing));
+      data[media] = !playing[`${media}`];
+      GetWebcam(data, (stream) => {
         videoRef.current.srcObject = stream;
       });
     }
@@ -81,17 +79,14 @@ const Room = () => {
   const changeState = (media) => {
     // shallow copy & deep copy
     let origin = JSON.parse(JSON.stringify(playing));
-    for (const [key, value] of Object.entries(origin)) {
-      if (key == media) origin[key] = !value;
-      else origin[key] = value;
-    }
+    origin[media] = !playing[media];
     setPlaying(origin);
   };
+  // 화면 공유 기능
   const screenShare = () => {
     GetWebScreen();
   }
   return (
-    // 방 input
     <>
       <div className="RoomApp">
         <div
