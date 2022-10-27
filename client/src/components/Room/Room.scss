@@ -1,15 +1,15 @@
-.RoomApp{
-    // background-color: antiquewhite;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 150px;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 20px;
-    align-content: space-between;
-    align-items: center;
-    justify-content: center;
-}
+// .RoomApp{
+//     // background-color: antiquewhite;
+//     display: flex;
+//     flex-wrap: wrap;
+//     margin-top: 150px;
+//     margin-left: 10%;
+//     margin-right: 10%;
+//     padding: 20px;
+//     align-content: space-between;
+//     align-items: center;
+//     justify-content: center;
+// }
 .roomData {
     display: flex;
     align-items: center;
@@ -43,14 +43,14 @@
      }
 }
 
-.Chat {
-    display: flex;
-    width: 400px;
-    margin-bottom: 20px;
-    border: 1px solid #bcbcbc;
-    position: relative;
-    float: right;
-}
+// .Chat {
+//     display: flex;
+//     width: 400px;
+//     margin-bottom: 20px;
+//     border: 1px solid #bcbcbc;
+//     position: relative;
+//     float: right;
+// }
 
 
 @media screen and (max-width: 760px) and (min-width: 1px) {
@@ -60,9 +60,9 @@
     }
 }
 
-@media screen and (max-width: 760px) and (min-width: 1px) {
-    .Chat{
-        max-width: 100%;
-        padding:0 6.25vw;
-    }
-}
+// @media screen and (max-width: 760px) and (min-width: 1px) {
+//     .Chat{
+//         max-width: 100%;
+//         padding:0 6.25vw;
+//     }
+// }
