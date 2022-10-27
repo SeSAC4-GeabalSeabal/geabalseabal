@@ -16,8 +16,8 @@ const Room = () => {
   let roomname;
   let myStream;
   let myPeerConnection;
-  let myDataChannel;
 
+  // 추후 링크 공유 위하여 필요
   useEffect(() => {
     if (searchParams.get('roomId')) {
       console.log(searchParams.get('roomId'));
@@ -46,15 +46,6 @@ const Room = () => {
     // 방 정보 보내기 및 방 참가 시작 
     socket.emit("join_room", roomname);
     socket.emit("nickname", NickName);
-    // //RTC code
-    // function makeConnection() {
-    //   let myPeerConnection = new RTCPeerConnection();
-    //   console.log(
-    //     GetWebcam.getTracks().forEach((track) =>
-    //       myPeerConnection.addTrack(track, GetWebcam)
-    //     )
-    //   );
-    // }
   }
 
   // RTC Code(실제로 연결을 만드는 함수)
@@ -71,6 +62,7 @@ const Room = () => {
       .getTracks()
       .forEach(track => myPeerConnection.addTrack(track, myStream));
   }
+
   // ice 전달 
   socket.on('ice', ice => {
     console.log('received the answer');
@@ -88,7 +80,7 @@ const Room = () => {
     peersStream.srcObject = data.stream;
   }
 
-  // Socket code
+  // offer&answer 왕복 전달
   socket.on("welcome", async () => {
     // Peer A : make offer
     const offer = await myPeerConnection.createOffer();
@@ -112,7 +104,7 @@ const Room = () => {
   });
 
   // start, stop 버튼 이벤트
-  const startOrStop = (media) => {
+  const startOrStop = async(media) => {
     if (playing[`${media}`]) {
       const s = videoRef.current.srcObject;
       const content = s.getTracks().filter((track) => track.kind == `${media}`);
@@ -125,9 +117,27 @@ const Room = () => {
       });
     }
     changeState(media);
+    /* 수정 중 구역 */
+    // 변경사항 steam에 저장하여 보내기
+    // myStream = await navigator.mediaDevices.getUserMedia(playing)
+    // 변경 사항 stream에 저장 써보는 중
+    // if (myPeerConnection) {
+    //   const mediaSender = myPeerConnection
+    //     .getSenders()
+    //     .find((sender) => sender.track.kind = `${media}`);
+    //   console.log('Sender : ', mediaSender);
+    // }
+    // 카메라 변경 예시 코드
+    // if(myPeerConnection) {
+    //   const videoTrack = myStream.getVideoTracks()[0]
+    //   const videoSender = myPeerConnection
+    //     .getSenders()
+    //     .find((sender) => sender.track.kind === 'video');
+    //   videoSender.replaceTrack(videoTrack);
+    // } 
   };
 
-  // on&off위하여 setPlaying 값 변환
+  // on&off위하여 setPlaying 값 변환 함수
   const changeState = (media) => {
     // shallow copy & deep copy
     let origin = JSON.parse(JSON.stringify(playing));
@@ -143,31 +153,28 @@ const Room = () => {
   return (
     // 방 input
     <div className="RoomApp" style={{ marginTop: "150px" }}>
- 
-        <div   className="roomData"  id="roomData"  ref={inputRef}>
-
+        {/* 방, 닉네임 입력 박스 */}
+        <div className="roomData"  id="roomData"  ref={inputRef}>
           <input type="text" placeholder="방 이름" name="roomName"></input>
-          <input
-            type="text"
-            placeholder="닉네임을 정해주세요"
-            name="NickName"
-          ></input>
+          <input type="text" placeholder="닉네임을 정해주세요" name="NickName"></input>
           <button onClick={event}>입장</button>
         </div>
       <div className="WebCam">
         <div className="videoApp">
-          <div className="videoBox"><video ref={videoRef} autoPlay /></div>
-          <div className="videoBox"><video id="guestVedio" autoPlay /></div>
+          <div className="videoBox"><video ref={videoRef} autoPlay /></div> {/* 내 화면*/}
+          <div className="videoBox"><video id="guestVedio" autoPlay /></div> {/* 상대 화면*/}
+          {/* on&off 버튼 및 화면공유 버튼 */}
           <div className="videobutton">
-          <button onClick={() => startOrStop("video")}>
-            {playing["video"] ? "비디오 Stop" : "비디오 Start"}
-          </button>
-          <button onClick={() => startOrStop("audio")}>
-            {playing["audio"] ? "오디오 Stop" : "오디오 Start"}
-          </button>
+            <button onClick={() => startOrStop("video")}>
+              {playing["video"] ? "비디오 Stop" : "비디오 Start"}
+            </button>
+            <button onClick={() => startOrStop("audio")}>
+              {playing["audio"] ? "오디오 Stop" : "오디오 Start"}
+            </button>
           <button onClick={ screenShare }>화면 공유</button>
           </div>
         </div>
+        {/* 채팅 시스템 */}
         <div className="Chat"><Chat socket={ socket } roomName={roomName}/></div>
       </div>
     </div>
