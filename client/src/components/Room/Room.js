@@ -97,11 +97,7 @@ const Room = () => {
     // 방 input
     <div className="RoomApp" style={{ marginTop: "150px" }}>
       
-        <div 
-          className="roomData"
-          id="roomData"
-          ref={inputRef}
-        >
+        <div   className="roomData"  id="roomData"  ref={inputRef}>
           <input type="text" placeholder="방 이름" name="roomName"></input>
           <input
             type="text"
@@ -112,7 +108,7 @@ const Room = () => {
         </div>
       
       <div className="WebCam">
-        <div className="video">
+        <div className="videoApp">
           <div className="videoBox"><video ref={videoRef} autoPlay /></div>
           <div className="videobutton">
           <button onClick={() => startOrStop("video")}>
