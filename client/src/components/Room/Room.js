@@ -152,6 +152,7 @@ const Room = () => {
 
   return (
     // 방 input
+
     <div className="RoomApp" style={{ marginTop: "150px" }}>
         {/* 방, 닉네임 입력 박스 */}
         <div className="roomData"  id="roomData"  ref={inputRef}>
@@ -164,6 +165,7 @@ const Room = () => {
           <div className="videoBox"><video ref={videoRef} autoPlay /></div> {/* 내 화면*/}
           <div className="videoBox"><video id="guestVedio" autoPlay /></div> {/* 상대 화면*/}
           {/* on&off 버튼 및 화면공유 버튼 */}
+
           <div className="videobutton">
             <button onClick={() => startOrStop("video")}>
               {playing["video"] ? "비디오 Stop" : "비디오 Start"}
