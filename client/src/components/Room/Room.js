@@ -95,20 +95,19 @@ const Room = () => {
   }
   return (
     // 방 input
-    <div className="RoomApp" style={{ marginTop: "150px" }}>
-      
-        <div   className="roomData"  id="roomData"  ref={inputRef}>
-          <input type="text" placeholder="방 이름" name="roomName"></input>
-          <input
-            type="text"
-            placeholder="닉네임을 정해주세요"
-            name="NickName"
-          ></input>
-          <button onClick={event}>전송</button>
-        </div>
+    <div className="RoomApp">
+      <div   className="roomData"  id="roomData"  ref={inputRef}>
+        <input type="text" placeholder="방 이름" name="roomName"></input>
+        <input
+          type="text"
+          placeholder="닉네임을 정해주세요"
+          name="NickName"
+        ></input>
+        <button onClick={event}>전송</button>
+      </div>
       
       <div className="WebCam">
-        <div className="videoApp">
+        <div className="video">
           <div className="videoBox"><video ref={videoRef} autoPlay /></div>
           <div className="videobutton">
           <button onClick={() => startOrStop("video")}>
