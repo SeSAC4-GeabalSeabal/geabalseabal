@@ -15,7 +15,8 @@ import "./Chat.scss";
 
     const [chatArr, setChatArr] = useState([]);
     const inputRef = useRef(null); // 채팅 내용
-  
+    
+    
     useEffect(() => {
       // 닉네임 및 메세지 받는 부분
       socket.on("new_message", (nickname, message) => {
