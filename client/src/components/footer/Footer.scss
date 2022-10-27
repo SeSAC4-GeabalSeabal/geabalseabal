@@ -1,16 +1,21 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
 .footer {
     //background: rgb(214, 211, 222);
     background: rgb(227, 223, 235);
     color: #fff;
     padding: 4rem 6rem;
+    font-family: 'Noto Sans KR', sans-serif;
   }
   
-  .top {
-    display: flex;
-    align-items: center;
+  .bottom {
+    //display: flex;
     text-align: start;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    //flex-wrap: wrap;
   }
 
   @media screen and (max-width: 850px) {

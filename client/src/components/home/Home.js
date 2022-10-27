@@ -6,7 +6,6 @@ import Main from "../main/Main";
 function Home( props ) {
   return (
     <>
-      <Nav setIsLogin={props.setIsLogin} isLogin={props.isLogin}/>
       <Banner />
       <Main setIsLogin={props.setIsLogin} />
     </>

@@ -9,6 +9,7 @@ passport.serializeUser(function (user, done) {
 
 // 사용자가 페이지를 방문할 때마다 호출되는 함수
 passport.deserializeUser(function (user, done) {
+  console.log('deserializeUser');
   done(null, user);
 });
 
