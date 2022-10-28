@@ -19,11 +19,11 @@ const Room = () => {
 
   let roomname;
   let myStream;
-  let myPeerConnection;
+  let myPeerConnection; 
 
   // 방제목 입력 기능 부분
   async function event() {
-    var NickName = "";
+    let NickName = '';
     if ( inputRef.current == null ) {
       roomname = roomName;
       NickName = guestRef.current.children[0].value;      
@@ -32,11 +32,10 @@ const Room = () => {
       NickName = inputRef.current.children[1].value;
       
       inputRef.current.children[0].value = "";
+      socket.emit("check_room", roomname);
     }
     setRoomname(roomname);
-    socket.emit("check_room", roomname);
-  }
-  async function eventDo(roomname) {
+
     // 캠 공유 시작
     await GetWebcam(playing, (stream) => {
       videoRef.current.srcObject = stream;
@@ -47,7 +46,7 @@ const Room = () => {
     socket.emit("join_room", roomname); // 1. room 인풋 값 보내기
     socket.emit("nickname", NickName);
     socket.on("result", (msg) => {
-      if (msg == "failed") {
+      if (msg == false) {
         alert("이미 대화 중인 방 입니다.");
       }
     });
@@ -114,10 +113,10 @@ const Room = () => {
   socket.on("answer", async (answer) => {
     myPeerConnection.setRemoteDescription(answer);
   });
-  socket.on("result", (result) => {
-    if (!result.result) alert(result.msg);
-    else eventDo(result.roomname);
-  });
+  // socket.on("result", (result) => {
+  //   if (!result.result) alert(result.msg);
+  //   else eventDo(result.roomname);
+  // });
 
   // start, stop 버튼 이벤트
   const startOrStop = async (media) => {
