@@ -69,11 +69,14 @@ io.on("connection", (socket) => {
         socket.emit("result", failed);
       }
     }
-
-    // 방 사람들에게만 welocome 이벤트 생성 ! (입장 메세지 보내기)
-    socket.to(roomName).emit("welcome", socket.nickname);
+    // 닉네임 받아와서 소켓에 저장
+    socket.on("nickname", async (nickname) => {
+      socket["nickname"] = nickname;
+      // 방 사람들에게만 welocome 이벤트 생성 ! (입장 메세지 보내기)
+      socket.to(roomName).emit("welcome", socket.nickname);
+    });
   });
-
+  
   // 손님 방참여
   socket.on("guest_room", (roomId) => {
     // ** roomId rooms목록 이용하여 roomName으로 전환 필요
@@ -81,9 +84,7 @@ io.on("connection", (socket) => {
     console.log("id", socket.id);
     const roomList = socket.adapter.rooms;
   });
-
-  // 닉네임 받아와서 소켓에 저장
-  socket.on("nickname", (nickname) => (socket["nickname"] = nickname));
+  
 
   // 새로운 채팅방 메세지 받고(Room 버전)
   socket.on("new_message", (msg, room) => {
