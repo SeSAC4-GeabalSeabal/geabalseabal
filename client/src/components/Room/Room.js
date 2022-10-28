@@ -34,7 +34,8 @@ const Room = () => {
       inputRef.current.children[0].value = "";
     }
     setRoomname(roomname);
-
+    socket.emit("check_room", roomname);
+  async function eventDo(roomname) {
     // 캠 공유 시작
     await GetWebcam(playing, (stream) => {
       videoRef.current.srcObject = stream;
@@ -72,7 +73,9 @@ const Room = () => {
     myPeerConnection = new RTCPeerConnection(); // peer connection 생성
     myPeerConnection.addEventListener("icecandidate", handleIce);
     myPeerConnection.addEventListener("addstream", handleAddStream);
-    myStream.getTracks().forEach((track) => myPeerConnection.addTrack(track, myStream));
+    myStream
+      .getTracks()
+      .forEach((track) => myPeerConnection.addTrack(track, myStream));
   }
 
   // ice 전달
@@ -109,6 +112,10 @@ const Room = () => {
   // 처음 유저: answer 받음
   socket.on("answer", async (answer) => {
     myPeerConnection.setRemoteDescription(answer);
+  });
+  socket.on("result", (result) => {
+    if (!result.result) alert(result.msg);
+    else eventDo(result.roomname);
   });
 
   // start, stop 버튼 이벤트
@@ -158,11 +165,9 @@ const Room = () => {
     GetWebScreen();
   };
 
-  // 초대 링크 기능 
-  const invite = () => {
+  // 초대 링크 기능
+  const invite = () => {};
 
-  } 
-  
   return (
     // 방 input
     <div className="RoomApp" style={{ marginTop: "150px" }}>
@@ -170,7 +175,11 @@ const Room = () => {
       {!searchParams.get("roomId")?
       (<div className="roomData" id="roomData" ref={inputRef}>
         <input type="text" placeholder="방 이름" name="roomName"></input>
-        <input type="text" placeholder="닉네임을 정해주세요" name="NickName"></input>
+        <input
+          type="text"
+          placeholder="닉네임을 정해주세요"
+          name="NickName"
+        ></input>
         <button onClick={event}>입장</button>
       </div>) : ""}
       {searchParams.get("roomId")?

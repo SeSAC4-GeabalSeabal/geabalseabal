@@ -55,11 +55,17 @@ io.on("connection", (socket) => {
   socket["nickname"] = "익명"; // 기본 닉네임
   // console.log("im adapter: ", io.sockets.adapter);
   // 방장 방참여
+  socket.on("check_room", (roomName) => {
+    if (socket.adapter.rooms.get(roomName) != undefined) {
+      socket.emit("result", {
+        result: false,
+        msg: roomName + "은 이미 존재하는 방입니다.",
+      });
+    } else socket.emit("result", { result: true, roomname: roomName });
+  });
   socket.on("join_room", (roomName) => {
-    console.log(roomName);
     // roomName 방제목으로 된 방이 없다면(새로운 방)
-    socket.join(roomName); 
-    console.log(socket.id);
+      socket.join(roomName); // 새로운 방 생성
     // 닉네임 받아와서 소켓에 저장
     socket.on("nickname", async (nickname) => {
       socket["nickname"] = nickname;
@@ -100,7 +106,9 @@ io.on("connection", (socket) => {
 
   // 연결 끊어지기 직전에 bye 메세지 전송
   socket.on("disconnecting", () => {
-    socket.rooms.forEach((room) => socket.to(room).emit("bye", socket.nickname));
+    socket.rooms.forEach((room) =>
+      socket.to(room).emit("bye", socket.nickname)
+    );
   });
 });
 
