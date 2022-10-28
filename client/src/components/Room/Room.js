@@ -1,8 +1,8 @@
 import io from "socket.io-client";
 import Chat from "../Chat/Chat";
-import './Room.scss';
+import "./Room.scss";
 import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from "react-router-dom";
 import GetWebcam from "../getWebCam/GetWebCam";
 import GetWebScreen from "../getWebScreen/GetWebScreen";
 
@@ -19,16 +19,15 @@ const Room = () => {
 
   // 추후 링크 공유 위하여 필요
   useEffect(() => {
-    if (searchParams.get('roomId')) {
-      console.log(searchParams.get('roomId'));
+    if (searchParams.get("roomId")) {
+      console.log(searchParams.get("roomId"));
     } else {
     }
   }, []);
 
   const videoRef = useRef(null); // 비디오
   const inputRef = useRef(null); // 방이름
-  
-  
+
   // 방제목 입력 기능 부분
   async function event() {
     roomname = inputRef.current.children[0].value;
@@ -36,60 +35,64 @@ const Room = () => {
     setRoomname(roomname);
     inputRef.current.children[0].value = "";
     inputRef.current.hidden = true;
-    
+
     // 캠 공유 시작
     await GetWebcam(playing, (stream) => {
       videoRef.current.srcObject = stream;
     });
     await makeConnection();
 
-    // 방 정보 보내기 및 방 참가 시작 
-    socket.emit("join_room", roomname);
+    // 방 정보 보내기 및 방 참가 시작, 방 만들기 실패
+    socket.emit("join_room", roomname); // 1. room 인풋 값 보내기
     socket.emit("nickname", NickName);
+    socket.on("result", (msg) => {
+      console.log("join result : ", msg);
+      if (msg == "failed") {
+        alert("이미 대화 중인 방 입니다.");
+      }
+    });
   }
 
   // RTC Code(실제로 연결을 만드는 함수)
-  async function makeConnection () {
+  async function makeConnection() {
     const initialConstrains = {
-      audio: true, 
-      video: { facingMode: 'user' }, 
+      audio: true,
+      video: { facingMode: "user" },
     };
-    myStream = await navigator.mediaDevices.getUserMedia(initialConstrains); // 오디오, 비디오 트랙 담아주기 
+    myStream = await navigator.mediaDevices.getUserMedia(initialConstrains); // 오디오, 비디오 트랙 담아주기
     myPeerConnection = new RTCPeerConnection(); // peer connection 생성
-    myPeerConnection.addEventListener('icecandidate', handleIce);
-    myPeerConnection.addEventListener('addstream', handleAddStream);
-    myStream
-      .getTracks()
-      .forEach(track => myPeerConnection.addTrack(track, myStream));
+    myPeerConnection.addEventListener("icecandidate", handleIce);
+    myPeerConnection.addEventListener("addstream", handleAddStream);
+    myStream.getTracks().forEach((track) => myPeerConnection.addTrack(track, myStream));
   }
 
-  // ice 전달 
-  socket.on('ice', ice => {
-    console.log('received the answer');
-    myPeerConnection.addIceCandidate(ice); 
-  })
+  // ice 전달
+  socket.on("ice", (ice) => {
+    console.log("received the answer");
+    myPeerConnection.addIceCandidate(ice);
+  });
 
   // iceCandidate EventListener
   function handleIce(data) {
-    console.log('sent candidate');
-    socket.emit('ice', data.candidate, roomname);
+    console.log("sent candidate");
+    socket.emit("ice", data.candidate, roomname);
   }
   function handleAddStream(data) {
-    console.log('got an event from my peer');
-    const peersStream = document.getElementById('guestVedio');
+    console.log("got an event from my peer");
+    const peersStream = document.getElementById("guestVedio");
     peersStream.srcObject = data.stream;
   }
 
   // offer&answer 왕복 전달
   socket.on("welcome", async () => {
-    // Peer A : make offer
+    // 처음 유저: 오퍼를 보낸다
     const offer = await myPeerConnection.createOffer();
     myPeerConnection.setLocalDescription(offer);
     console.log("sent offer: ", offer);
     socket.emit("offer", offer, roomname);
-    console.log('sent the offer');
+    console.log("sent the offer");
   });
-  // Peer B : answer
+  // 나중 유저: 오퍼 받고, answer 보낸다
   socket.on("offer", async (offer) => {
     console.log("received offer: ", offer);
     myPeerConnection.setRemoteDescription(offer);
@@ -98,13 +101,14 @@ const Room = () => {
     socket.emit("answer", answer, roomname);
     console.log("sent the answer: ", answer);
   });
+  // 처음 유저: answer 받음
   socket.on("answer", async (answer) => {
-    myPeerConnection.setRemoteDescription(answer); 
+    myPeerConnection.setRemoteDescription(answer);
     console.log("got answer: ", answer);
   });
 
   // start, stop 버튼 이벤트
-  const startOrStop = async(media) => {
+  const startOrStop = async (media) => {
     if (playing[`${media}`]) {
       const s = videoRef.current.srcObject;
       const content = s.getTracks().filter((track) => track.kind == `${media}`);
@@ -134,7 +138,7 @@ const Room = () => {
     //     .getSenders()
     //     .find((sender) => sender.track.kind === 'video');
     //   videoSender.replaceTrack(videoTrack);
-    // } 
+    // }
   };
 
   // on&off위하여 setPlaying 값 변환 함수
@@ -148,7 +152,7 @@ const Room = () => {
   // 화면 공유 기능 시작
   const screenShare = () => {
     GetWebScreen();
-  }
+  };
 
   // 초대 링크 기능 
   const invite = () => {
@@ -159,31 +163,34 @@ const Room = () => {
     // 방 input
 
     <div className="RoomApp" style={{ marginTop: "150px" }}>
-        {/* 방, 닉네임 입력 박스 */}
-        <div className="roomData"  id="roomData"  ref={inputRef}>
-          <input type="text" placeholder="방 이름" name="roomName"></input>
-          <input type="text" placeholder="닉네임을 정해주세요" name="NickName"></input>
-          <button onClick={event}>입장</button>
-        </div>
+      {/* 방, 닉네임 입력 박스 */}
+      <div className="roomData" id="roomData" ref={inputRef}>
+        <input type="text" placeholder="방 이름" name="roomName"></input>
+        <input type="text" placeholder="닉네임을 정해주세요" name="NickName"></input>
+        <button onClick={event}>입장</button>
+      </div>
       <div className="WebCam">
         <div className="videoApp">
-          <div className="videoBox"><video ref={videoRef} autoPlay /></div> {/* 내 화면*/}
-          <div className="videoBox"><video id="guestVedio" autoPlay /></div> {/* 상대 화면*/}
+          <div className="videoBox">
+            <video ref={videoRef} autoPlay />
+          </div>{" "}
+          {/* 내 화면*/}
+          <div className="videoBox">
+            <video id="guestVedio" autoPlay />
+          </div>{" "}
+          {/* 상대 화면*/}
           {/* on&off 버튼 및 화면공유 버튼 */}
-
           <div className="videobutton">
-            <button onClick={() => startOrStop("video")}>
-              {playing["video"] ? "비디오 Stop" : "비디오 Start"}
-            </button>
-            <button onClick={() => startOrStop("audio")}>
-              {playing["audio"] ? "오디오 Stop" : "오디오 Start"}
-            </button>
-            <button onClick={ screenShare }>화면 공유</button>
+            <button onClick={() => startOrStop("video")}>{playing["video"] ? "비디오 Stop" : "비디오 Start"}</button>
+            <button onClick={() => startOrStop("audio")}>{playing["audio"] ? "오디오 Stop" : "오디오 Start"}</button>
+            <button onClick={screenShare}>화면 공유</button>
             <button onClick={ invite }>공유</button>
           </div>
         </div>
         {/* 채팅 시스템 */}
-        <div className="Chat"><Chat socket={ socket } roomName={roomName}/></div>
+        <div className="Chat">
+          <Chat socket={socket} roomName={roomName} />
+        </div>
       </div>
     </div>
   );
