@@ -29,7 +29,6 @@ import "./Chat.scss";
 
       //입장 메시지
       socket.on("welcome", (nickname) => {
-        console.log( "welcone " );
         console.log( nickname );
         const notice = {
           content: `${nickname}님이 들어오셨습니다.`,
