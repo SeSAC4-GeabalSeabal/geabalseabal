@@ -63,7 +63,9 @@ import "./Chat.scss";
             ))}
           </div>
           <div className="InputBox" ref={inputRef}>
-            <input placeholder="내용"></input>
+            <input type="text" placeholder="내용" onKeyPress={(e) => {
+              if(window.event.keyCode===13){submit();}
+            }} ></input>
             <button onClick={ submit }>등록</button>
           </div>
         </div>
