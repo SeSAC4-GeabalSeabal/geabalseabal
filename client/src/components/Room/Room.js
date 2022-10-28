@@ -26,7 +26,7 @@ const Room = () => {
   }, []);
 
   const videoRef = useRef(null); // 비디오
-  const inputRef = useRef(null); // 방이름
+  const inputRef = useRef(null); // 방이름(방장인 경우)
 
   // 방제목 입력 기능 부분
   async function event() {
