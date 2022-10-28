@@ -42,6 +42,13 @@ app.use(express.urlencoded({ extended: true }));
 const authRouter = require("./routes");
 app.use("/", authRouter);
 
+function getByVaule(map, searchValue) {
+  for (let [key, value] of map.entries()) {
+    console.log(key, value);
+    if (value.has(searchValue) && key !== searchValue)
+      return key;
+  }
+}
 /* socket.io */
 io.on("connection", (socket) => {
   let sockets = {};
@@ -58,15 +65,7 @@ io.on("connection", (socket) => {
   });
   socket.on("join_room", (roomName) => {
     // roomName 방제목으로 된 방이 없다면(새로운 방)
-    if (!sockets[roomName]) {
-      sockets[roomName] = [];
-      socket.roomName = roomName; // 2. roomName 파라미터로 받은 값을 socket.roomName에 넣는다.
-      sockets[roomName].push(socket); // 3. sockets에 새로운 방을 만든다
       socket.join(roomName); // 새로운 방 생성
-      // console.log("socket 방 정보!!: ", socket.adapter);
-    } else {
-      console.log("asdas");
-    }
     // 닉네임 받아와서 소켓에 저장
     socket.on("nickname", async (nickname) => {
       socket["nickname"] = nickname;
@@ -75,12 +74,10 @@ io.on("connection", (socket) => {
     });
   });
   
-  // 손님 방참여
-  socket.on("guest_room", (roomId) => {
-    // ** roomId rooms목록 이용하여 roomName으로 전환 필요
-    console.log(socket.adapter.rooms);
-    console.log("id", socket.id);
-    const roomList = socket.adapter.rooms;
+  // 게스트 roomId -> roomName 변환
+  socket.on("guest_room_name", async (roomId) => {
+    let roomName = getByVaule(socket.adapter.rooms, roomId); 
+    await socket.emit('guest_room', roomName);
   });
   
 
