@@ -59,7 +59,6 @@ app.use("/", authRouter);
 
 function getByVaule(map, searchValue) {
   for (let [key, value] of map.entries()) {
-    console.log(key, value);
     if (value.has(searchValue) && key !== searchValue) return key;
   }
 }
