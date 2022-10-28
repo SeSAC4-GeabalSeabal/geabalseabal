@@ -48,26 +48,24 @@ io.on("connection", (socket) => {
   socket["nickname"] = "익명"; // 기본 닉네임
   // console.log("im adapter: ", io.sockets.adapter);
   // 방장 방참여
+  socket.on("check_room", (roomName) => {
+    if (socket.adapter.rooms.get(roomName) != undefined) {
+      socket.emit("result", {
+        result: false,
+        msg: roomName + "은 이미 존재하는 방입니다.",
+      });
+    } else socket.emit("result", { result: true, roomname: roomName });
+  });
   socket.on("join_room", (roomName) => {
-    console.log(roomName);
     // roomName 방제목으로 된 방이 없다면(새로운 방)
     if (!sockets[roomName]) {
       sockets[roomName] = [];
       socket.roomName = roomName; // 2. roomName 파라미터로 받은 값을 socket.roomName에 넣는다.
       sockets[roomName].push(socket); // 3. sockets에 새로운 방을 만든다
       socket.join(roomName); // 새로운 방 생성
-      console.log("socket 방들 정보: ", sockets);
+      // console.log("socket 방 정보!!: ", socket.adapter);
     } else {
-      // 이미 roomName으로 된 방이 있고, 같은 방을 만들려고 할때
-      if (sockets[roomName].length < 2) {
-        // 방이 1개인 경우 방을 만든다. 같은 방 2개 부터 failed
-        socket.roomName = roomName;
-        sockets[roomName].push(socket);
-        socket.join(roomName);
-        console.log("나는 두번쨰 유저");
-      } else {
-        socket.emit("result", failed);
-      }
+      console.log("asdas");
     }
 
     // 방 사람들에게만 welocome 이벤트 생성 ! (입장 메세지 보내기)
@@ -110,7 +108,9 @@ io.on("connection", (socket) => {
 
   // 연결 끊어지기 직전에 bye 메세지 전송
   socket.on("disconnecting", () => {
-    socket.rooms.forEach((room) => socket.to(room).emit("bye", socket.nickname));
+    socket.rooms.forEach((room) =>
+      socket.to(room).emit("bye", socket.nickname)
+    );
   });
 });
 

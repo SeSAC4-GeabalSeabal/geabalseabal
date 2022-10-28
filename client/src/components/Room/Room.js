@@ -29,8 +29,11 @@ const Room = () => {
   const inputRef = useRef(null); // 방이름
 
   // 방제목 입력 기능 부분
-  async function event() {
+  function event() {
     roomname = inputRef.current.children[0].value;
+    socket.emit("check_room", roomname);
+  }
+  async function eventDo(roomname) {
     const NickName = inputRef.current.children[1].value;
     setRoomname(roomname);
     inputRef.current.children[0].value = "";
@@ -63,7 +66,9 @@ const Room = () => {
     myPeerConnection = new RTCPeerConnection(); // peer connection 생성
     myPeerConnection.addEventListener("icecandidate", handleIce);
     myPeerConnection.addEventListener("addstream", handleAddStream);
-    myStream.getTracks().forEach((track) => myPeerConnection.addTrack(track, myStream));
+    myStream
+      .getTracks()
+      .forEach((track) => myPeerConnection.addTrack(track, myStream));
   }
 
   // ice 전달
@@ -105,6 +110,10 @@ const Room = () => {
   socket.on("answer", async (answer) => {
     myPeerConnection.setRemoteDescription(answer);
     console.log("got answer: ", answer);
+  });
+  socket.on("result", (result) => {
+    if (!result.result) alert(result.msg);
+    else eventDo(result.roomname);
   });
 
   // start, stop 버튼 이벤트
@@ -154,11 +163,9 @@ const Room = () => {
     GetWebScreen();
   };
 
-  // 초대 링크 기능 
-  const invite = () => {
+  // 초대 링크 기능
+  const invite = () => {};
 
-  } 
-  
   return (
     // 방 input
 
@@ -166,7 +173,11 @@ const Room = () => {
       {/* 방, 닉네임 입력 박스 */}
       <div className="roomData" id="roomData" ref={inputRef}>
         <input type="text" placeholder="방 이름" name="roomName"></input>
-        <input type="text" placeholder="닉네임을 정해주세요" name="NickName"></input>
+        <input
+          type="text"
+          placeholder="닉네임을 정해주세요"
+          name="NickName"
+        ></input>
         <button onClick={event}>입장</button>
       </div>
       <div className="WebCam">
@@ -181,10 +192,14 @@ const Room = () => {
           {/* 상대 화면*/}
           {/* on&off 버튼 및 화면공유 버튼 */}
           <div className="videobutton">
-            <button onClick={() => startOrStop("video")}>{playing["video"] ? "비디오 Stop" : "비디오 Start"}</button>
-            <button onClick={() => startOrStop("audio")}>{playing["audio"] ? "오디오 Stop" : "오디오 Start"}</button>
+            <button onClick={() => startOrStop("video")}>
+              {playing["video"] ? "비디오 Stop" : "비디오 Start"}
+            </button>
+            <button onClick={() => startOrStop("audio")}>
+              {playing["audio"] ? "오디오 Stop" : "오디오 Start"}
+            </button>
             <button onClick={screenShare}>화면 공유</button>
-            <button onClick={ invite }>공유</button>
+            <button onClick={invite}>공유</button>
           </div>
         </div>
         {/* 채팅 시스템 */}
