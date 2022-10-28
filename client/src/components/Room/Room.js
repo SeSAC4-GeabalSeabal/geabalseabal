@@ -150,6 +150,11 @@ const Room = () => {
     GetWebScreen();
   }
 
+  // 초대 링크 기능 
+  const invite = () => {
+
+  } 
+  
   return (
     // 방 input
 
@@ -173,7 +178,8 @@ const Room = () => {
             <button onClick={() => startOrStop("audio")}>
               {playing["audio"] ? "오디오 Stop" : "오디오 Start"}
             </button>
-          <button onClick={ screenShare }>화면 공유</button>
+            <button onClick={ screenShare }>화면 공유</button>
+            <button onClick={ invite }>공유</button>
           </div>
         </div>
         {/* 채팅 시스템 */}
