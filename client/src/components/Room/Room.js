@@ -35,6 +35,7 @@ const Room = () => {
     }
     setRoomname(roomname);
     socket.emit("check_room", roomname);
+  }
   async function eventDo(roomname) {
     // 캠 공유 시작
     await GetWebcam(playing, (stream) => {
@@ -214,4 +215,4 @@ const Room = () => {
   );
 };
 
-export default Room;
+export default Room ;
