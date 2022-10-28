@@ -20,6 +20,7 @@ const Room = () => {
   let roomname;
   let myStream;
   let myPeerConnection; 
+  let roomId;
 
   // 방제목 입력 기능 부분
   async function event() {
@@ -94,7 +95,10 @@ const Room = () => {
     const peersStream = document.getElementById("guestVedio");
     peersStream.srcObject = data.stream;
   }
-
+  // roomID 받아오기
+  socket.on('socket_id', (id) => {
+    roomId = id;
+  })
   // offer&answer 왕복 전달
   socket.on("welcome", async () => {
     // 처음 유저: 오퍼를 보낸다
@@ -165,8 +169,59 @@ const Room = () => {
     GetWebScreen();
   };
 
+  // 카카오톡 sdk 추가
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+    script.async = true; 
+    document.body.appendChild(script);
+    return () => document.body.removeChild(script);
+  }, []);
+
   // 초대 링크 기능
-  const invite = () => {};
+  const invite = () => {
+    // kakao sdk script 부른 후 window.Kakao로 접근
+    if (window.Kakao) {
+      const kakao = window.Kakao;
+
+      // 카카오에서 제공하는 javascript key이용하여 initialize
+      kakao.init(`${process.env.REACT_APP_KAKAO_JS}`);
+
+      kakao.Share.sendDefault({
+        objectType: "feed", 
+        content: {
+          title: "개발새발", 
+          description: "당신을 초대합니다.", 
+          imageUrl: "https://i.pinimg.com/564x/da/1f/b3/da1fb39b3c4aeb177a1e8b95825d4b3e.jpg", 
+          link : {
+            mobileWebUrl:`http://localhost:3000/room?roomId=${roomId}`,
+            webUrl:`http://localhost:3000/room?roomId=${roomId}`,
+          },
+        },
+        social: {
+          likeCount: 286,
+          commentCount: 45,
+          sharedCount: 845,
+        },
+        buttons: [
+          {
+            title: '웹으로 보기',
+            link: {
+              mobileWebUrl: `http://localhost:3000/room?roomId=${roomId}`,
+              webUrl: `http://localhost:3000/room?roomId=${roomId}`,
+            },
+          },
+          {
+            title: '앱으로 보기',
+            link: {
+              mobileWebUrl: `http://localhost:3000/room?roomId=${roomId}`,
+              webUrl: `http://localhost:3000/room?roomId=${roomId}`,
+            },
+          },
+        ], 
+      });
+    }
+  };
 
   return (
     // 방 input

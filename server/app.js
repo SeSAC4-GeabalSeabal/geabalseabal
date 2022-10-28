@@ -66,8 +66,10 @@ io.on("connection", (socket) => {
   // 방참여
   socket.on("join_room", (roomName) => {
     // roomName 방제목으로 된 방이 없다면(새로운 방)
-      socket.join(roomName); // 새로운 방 생성
-      console.log(socket.id);
+    socket.join(roomName); // 새로운 방 생성
+    console.log(socket.id);
+    // 초대위하여 방 아이디 보내기
+    socket.emit('socket_id', socket.id);
     // 닉네임 받아와서 소켓에 저장
     socket.on("nickname", async (nickname) => {
       socket["nickname"] = nickname;
