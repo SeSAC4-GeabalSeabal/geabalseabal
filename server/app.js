@@ -53,8 +53,7 @@ function getByVaule(map, searchValue) {
 io.on("connection", (socket) => {
   let sockets = {};
   socket["nickname"] = "익명"; // 기본 닉네임
-  // console.log("im adapter: ", io.sockets.adapter);
-  // 방장 방참여
+  
   socket.on("check_room", (roomName) => {
     if (socket.adapter.rooms.get(roomName) != undefined) {
       socket.emit("result", {
@@ -63,9 +62,12 @@ io.on("connection", (socket) => {
       });
     } else socket.emit("result", { result: true, roomname: roomName });
   });
+  
+  // 방참여
   socket.on("join_room", (roomName) => {
     // roomName 방제목으로 된 방이 없다면(새로운 방)
       socket.join(roomName); // 새로운 방 생성
+      console.log(socket.id);
     // 닉네임 받아와서 소켓에 저장
     socket.on("nickname", async (nickname) => {
       socket["nickname"] = nickname;
