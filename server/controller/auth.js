@@ -1,9 +1,9 @@
 /* 메인 페이지 */
 exports.getMain = (req, res) => {
-  console.log('session', req.session); // 패스포트 세션
-  // console.log('req.user', req.user); // 요렇게 써도 사용가능
-  if ( !req.session ) res.send({isLogin: false});
-  else res.send({isLogin: true});
+  console.log("session", req.session); // 패스포트 세션
+  console.log("req.user", req.user); // 요렇게 써도 사용가능
+  if (!req.session) res.send({ isLogin: false });
+  else res.send({ isLogin: true });
 };
 
 /* 로그인 페이지 */
@@ -21,8 +21,7 @@ const passport = require("../passport/index.js");
 exports.getGoogle = passport.authenticate("google", {
   scope: ["email", "profile"],
 });
-exports.getCallback = 
-  passport.authenticate("google", {
+exports.getCallback = passport.authenticate("google", {
   successRedirect: "http://localhost:3000",
   failureRedirect: "http://localhost:3000/login", // 로그인 실패시
 });
@@ -33,7 +32,8 @@ exports.getKakao = passport.authenticate("kakao", {
 });
 (exports.getKakaoCallback = passport.authenticate("kakao", {
   successRedirect: "http://localhost:3000",
-  failureRedirect: "http://localhost:8000/login", // 로그인 실패시
+  failureRedirect: "http://localhost:3000/login", // 로그인 실패시
+  failureFlash: true,
 })),
   (req, res) => {
     res.redirect("/");
@@ -41,12 +41,12 @@ exports.getKakao = passport.authenticate("kakao", {
 
 /* 로그아웃 */
 exports.logout = async (req, res) => {
-  console.log( 'logout' );
+  console.log("logout");
   try {
     await req.session.destroy();
-    return res.send({isLogin: false});
-  } catch(e) {
+    return res.send({ isLogin: false });
+  } catch (e) {
     console.log(e);
-    return res.send({isLogin: true});
+    return res.send({ isLogin: true });
   }
 };
