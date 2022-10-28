@@ -198,7 +198,9 @@ const Room = () => {
       const kakao = window.Kakao;
 
       // 카카오에서 제공하는 javascript key이용하여 initialize
-      kakao.init(`${process.env.REACT_APP_KAKAO_JS}`);
+      if (!kakao.isInitialized()) {
+        kakao.init(`${process.env.REACT_APP_KAKAO_JS}`);
+      }
 
       kakao.Share.sendDefault({
         objectType: "feed", 

@@ -1,7 +1,7 @@
 /* 메인 페이지 */
 exports.getMain = (req, res) => {
   console.log("session", req.session); // 패스포트 세션
-  console.log("req.user", req.user); // 요렇게 써도 사용가능
+  // console.log("req.user", req.user); // 요렇게 써도 사용가능
   if (!req.session) res.send({ isLogin: false });
   else res.send({ isLogin: true });
 };
