@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import GetWebcam from "../getWebCam/GetWebCam";
 import GetWebScreen from "../getWebScreen/GetWebScreen";
+import Room4 from '../img/Room4.jpg';
 
 const socket = io.connect("http://localhost:8000");
 
@@ -238,9 +239,30 @@ const Room = () => {
             roomName={roomname == undefined ? roomName : roomname}
           />
         </div>
+        <div>
+          <img src={Room4} />
+        </div>
       </div>
     </div>
   );
 };
 
 export default Room;
+
+
+
+//<a href="https://www.freepik.com/free-vector/social-tree-concept-illustration_12491662.htm#page=4&query=social&position=6&from_view=search&track=sph">Image by storyset</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/ideas-sketch_2944686.htm#page=12&query=social&position=2&from_view=search&track=sph">Image by rawpixel.com</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/set-devices-electronics-with-people-video-conference_7585977.htm#page=86&query=people&position=15&from_view=search&track=sph">Image by studiogstock</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/set-devices-electronics-with-people-video-conference_7585977.htm#page=86&query=people&position=15&from_view=search&track=sph">Image by studiogstock</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/flat-woman-home-office-with-laptop-conducting-video-meeting-team-building-with-colleagues-girl-chatting-talking-with-friends-online-vector-illustration-videoconference-remote-work_16503931.htm#page=5&query=computer&position=35&from_view=search&track=sph">Image by redgreystock</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/flat-design-twitch-panels_21251690.htm#page=7&query=computer&position=43&from_view=search&track=sph">Image by pikisuperstar</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/vector-set-social-media-icons_3425296.htm#page=12&query=computer&position=20&from_view=search&track=sph">Image by rawpixel.com</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/variety-online-courses-with-teachers_8111091.htm#page=13&query=computer&position=19&from_view=search&track=sph">Image by pikisuperstar</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/flat-happy-people-celebrate-birthday-online-party-via-internet_24817776.htm#page=15&query=computer&position=13&from_view=search&track=sph">Image by redgreystock</a> on Freepik
+
+//<a href="https://www.flaticon.com/free-icons/professions-and-jobs" title="professions and jobs icons">Professions and jobs icons created by Icongeek26 - Flaticon</a>
+
+
+
+
