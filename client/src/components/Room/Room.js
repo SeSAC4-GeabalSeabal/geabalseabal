@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import GetWebcam from "../getWebCam/GetWebCam";
 import GetWebScreen from "../getWebScreen/GetWebScreen";
+import Room4 from '../img/Room4.jpg';
 
 const socket = io.connect("http://localhost:8000");
 
@@ -23,20 +24,29 @@ const Room = () => {
   let roomId;
 
   // 방제목 입력 기능 부분
-  async function event() {
-    let NickName = '';
-    if ( inputRef.current == null ) {
+  function event() {
+    let NickName = "";
+    if (inputRef.current == null) {
       roomname = roomName;
-      NickName = guestRef.current.children[0].value;      
+      NickName = guestRef.current.children[0].value;
+
+      eventDo(NickName);
     } else {
       roomname = inputRef.current.children[0].value;
       NickName = inputRef.current.children[1].value;
-      
+
       inputRef.current.children[0].value = "";
       socket.emit("check_room", roomname);
-    }
-    setRoomname(roomname);
 
+      setRoomname(roomname);
+
+      socket.on("checkResult", (result) => {
+        if (result.result) eventDo(NickName);
+        else alert(result.msg);
+      });
+    }
+  }
+  async function eventDo(NickName) {
     // 캠 공유 시작
     await GetWebcam(playing, (stream) => {
       videoRef.current.srcObject = stream;
@@ -55,9 +65,12 @@ const Room = () => {
 
   // 게스트 방 들어온 경우 roomId -> roomName 변환
   useEffect(() => {
-    if ( searchParams.get("roomId") != null || searchParams.get("roomId") != undefined ) {
+    if (
+      searchParams.get("roomId") != null ||
+      searchParams.get("roomId") != undefined
+    ) {
       socket.emit("guest_room_name", searchParams.get("roomId"));
-      socket.on('guest_room', (r) => {
+      socket.on("guest_room", (r) => {
         roomname = r;
         setRoomname(roomname);
       });
@@ -87,8 +100,8 @@ const Room = () => {
   // iceCandidate EventListener
   let ice = null;
   function handleIce(data) {
-    if ( data.candidate != null ) ice = data.candidate;
-    socket.emit("ice", ice, ( roomname == undefined ? roomName : roomname ));
+    if (data.candidate != null) ice = data.candidate;
+    socket.emit("ice", ice, roomname == undefined ? roomName : roomname);
   }
   function handleAddStream(data) {
     console.log("got an event from my peer");
@@ -104,14 +117,14 @@ const Room = () => {
     // 처음 유저: 오퍼를 보낸다
     const offer = await myPeerConnection.createOffer();
     myPeerConnection.setLocalDescription(offer);
-    socket.emit("offer", offer, ( roomname == undefined ? roomName : roomname ));
+    socket.emit("offer", offer, roomname == undefined ? roomName : roomname);
   });
   // 나중 유저: 오퍼 받고, answer 보낸다
   socket.on("offer", async (offer) => {
     myPeerConnection.setRemoteDescription(offer);
     const answer = await myPeerConnection.createAnswer();
     myPeerConnection.setLocalDescription(answer);
-    socket.emit("answer", answer, ( roomname == undefined ? roomName : roomname ));
+    socket.emit("answer", answer, roomname == undefined ? roomName : roomname);
   });
   // 처음 유저: answer 받음
   socket.on("answer", async (answer) => {
@@ -227,21 +240,31 @@ const Room = () => {
     // 방 input
     <div className="RoomApp" style={{ marginTop: "150px" }}>
       {/* 방, 닉네임 입력 박스 */}
-      {!searchParams.get("roomId")?
-      (<div className="roomData" id="roomData" ref={inputRef}>
-        <input type="text" placeholder="방 이름" name="roomName"></input>
-        <input
-          type="text"
-          placeholder="닉네임을 정해주세요"
-          name="NickName"
-        ></input>
-        <button onClick={event}>입장</button>
-      </div>) : ""}
-      {searchParams.get("roomId")?
-      (<div className="roomData" id="guestData" ref={guestRef}>
-        <input type="text" placeholder="닉네임을 정해주세요" name="NickName"></input>
-        <button onClick={ event }>입장</button>
-      </div>): ""}
+      {!searchParams.get("roomId") ? (
+        <div className="roomData" id="roomData" ref={inputRef}>
+          <input type="text" placeholder="방 이름" name="roomName"></input>
+          <input
+            type="text"
+            placeholder="닉네임을 정해주세요"
+            name="NickName"
+          ></input>
+          <button onClick={event}>입장</button>
+        </div>
+      ) : (
+        ""
+      )}
+      {searchParams.get("roomId") ? (
+        <div className="roomData" id="guestData" ref={guestRef}>
+          <input
+            type="text"
+            placeholder="닉네임을 정해주세요"
+            name="NickName"
+          ></input>
+          <button onClick={event}>입장</button>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="WebCam">
         <div className="videoApp">
           <div className="videoBox">
@@ -254,19 +277,47 @@ const Room = () => {
           {/* 상대 화면*/}
           {/* on&off 버튼 및 화면공유 버튼 */}
           <div className="videobutton">
-            <button onClick={() => startOrStop("video")}>{playing["video"] ? "비디오 Stop" : "비디오 Start"}</button>
-            <button onClick={() => startOrStop("audio")}>{playing["audio"] ? "오디오 Stop" : "오디오 Start"}</button>
-            <button onClick={ screenShare }>화면 공유</button>
-            <button onClick={ invite }>공유</button>
+            <button onClick={() => startOrStop("video")}>
+              {playing["video"] ? "비디오 Stop" : "비디오 Start"}
+            </button>
+            <button onClick={() => startOrStop("audio")}>
+              {playing["audio"] ? "오디오 Stop" : "오디오 Start"}
+            </button>
+            <button onClick={screenShare}>화면 공유</button>
+            <button onClick={invite}>공유</button>
           </div>
         </div>
         {/* 채팅 시스템 */}
         <div className="Chat">
-          <Chat socket={socket} roomName={( roomname == undefined ? roomName : roomname )} />
+          <Chat
+            socket={socket}
+            roomName={roomname == undefined ? roomName : roomname}
+          />
+        </div>
+        <div>
+          <img src={Room4} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Room ;
+export default Room;
+
+
+
+//<a href="https://www.freepik.com/free-vector/social-tree-concept-illustration_12491662.htm#page=4&query=social&position=6&from_view=search&track=sph">Image by storyset</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/ideas-sketch_2944686.htm#page=12&query=social&position=2&from_view=search&track=sph">Image by rawpixel.com</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/set-devices-electronics-with-people-video-conference_7585977.htm#page=86&query=people&position=15&from_view=search&track=sph">Image by studiogstock</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/set-devices-electronics-with-people-video-conference_7585977.htm#page=86&query=people&position=15&from_view=search&track=sph">Image by studiogstock</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/flat-woman-home-office-with-laptop-conducting-video-meeting-team-building-with-colleagues-girl-chatting-talking-with-friends-online-vector-illustration-videoconference-remote-work_16503931.htm#page=5&query=computer&position=35&from_view=search&track=sph">Image by redgreystock</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/flat-design-twitch-panels_21251690.htm#page=7&query=computer&position=43&from_view=search&track=sph">Image by pikisuperstar</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/vector-set-social-media-icons_3425296.htm#page=12&query=computer&position=20&from_view=search&track=sph">Image by rawpixel.com</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/variety-online-courses-with-teachers_8111091.htm#page=13&query=computer&position=19&from_view=search&track=sph">Image by pikisuperstar</a> on Freepik
+//<a href="https://www.freepik.com/free-vector/flat-happy-people-celebrate-birthday-online-party-via-internet_24817776.htm#page=15&query=computer&position=13&from_view=search&track=sph">Image by redgreystock</a> on Freepik
+
+//<a href="https://www.flaticon.com/free-icons/professions-and-jobs" title="professions and jobs icons">Professions and jobs icons created by Icongeek26 - Flaticon</a>
+
+
+
+

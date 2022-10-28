@@ -21,16 +21,31 @@ app.use(cors(corsQptions));
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 /* Sequelize */
 const { sequelize } = require("./model");
 
 /* session */
 const session = require("express-session");
-app.use(session({ secret: "secret" }));
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: false,
+    secret: "secret",
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    },
+  })
+);
+
+const cookieParser = require("cookie-parser");
+app.use(cookieParser("secret"));
+const flash = require("connect-flash");
+
+app.use(flash());
+
 app.use(passport.initialize());
 app.use(passport.session());
-
 /* env */
 require("dotenv").config();
 
@@ -45,24 +60,23 @@ app.use("/", authRouter);
 function getByVaule(map, searchValue) {
   for (let [key, value] of map.entries()) {
     console.log(key, value);
-    if (value.has(searchValue) && key !== searchValue)
-      return key;
+    if (value.has(searchValue) && key !== searchValue) return key;
   }
 }
 /* socket.io */
 io.on("connection", (socket) => {
   let sockets = {};
   socket["nickname"] = "익명"; // 기본 닉네임
-  
+
   socket.on("check_room", (roomName) => {
     if (socket.adapter.rooms.get(roomName) != undefined) {
-      socket.emit("result", {
+      socket.emit("checkResult", {
         result: false,
         msg: roomName + "은 이미 존재하는 방입니다.",
       });
-    } else socket.emit("result", { result: true, roomname: roomName });
+    } else socket.emit("checkResult", { result: true, roomname: roomName });
   });
-  
+
   // 방참여
   socket.on("join_room", (roomName) => {
     // roomName 방제목으로 된 방이 없다면(새로운 방)
@@ -77,13 +91,12 @@ io.on("connection", (socket) => {
       socket.to(roomName).emit("welcome", socket.nickname);
     });
   });
-  
+
   // 게스트 roomId -> roomName 변환
   socket.on("guest_room_name", async (roomId) => {
-    let roomName = getByVaule(socket.adapter.rooms, roomId); 
-    await socket.emit('guest_room', roomName);
+    let roomName = getByVaule(socket.adapter.rooms, roomId);
+    await socket.emit("guest_room", roomName);
   });
-  
 
   // 새로운 채팅방 메세지 받고(Room 버전)
   socket.on("new_message", (msg, room) => {
