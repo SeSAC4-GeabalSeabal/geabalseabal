@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback, ReactDOM } from "react";
 import { io } from "socket.io-client";
 import "./Chat.scss";
+// import Markdown from "../../lib/Markdown";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import Markdown from "../../lib/Markdown/Markdown";
+import SyntaxHighlighter from "react-syntax-highlighter";
 
 function Chat({ socket, roomName }) {
   // 내가 지금 1일 때. scss 편하게하는 법.
@@ -21,11 +22,10 @@ function Chat({ socket, roomName }) {
 
   useEffect(() => {
     // 닉네임 및 메세지 받는 부분
-    socket.on("new_message", (nickname, message) => {
+    socket.on("new_message", (nickname, message, mark) => {
       let chat = {
         name: nickname,
-        message: message,
-        mark,
+        message: message || mark,
       };
       setChatArr((prevList) => [...prevList, chat]);
     });
@@ -53,13 +53,14 @@ function Chat({ socket, roomName }) {
     const message = inputRef.current.children[1].value;
     await socket.emit("new_message", message, roomName);
   };
-
-  const codeblock = async () => {
+  // 마크다운 렌더링 하기
+  const markdownRenderer = async () => {
     const language = inputRef.current.children[0].value;
     const message = inputRef.current.children[1].value;
-    const markdown = `${language} ${message}`;
-    // console.log(codeText);
-    <Markdown linkTarget="_blank">{markdown}</Markdown>;
+    const markdown = ```${language} 
+      ${message}
+      ```;
+    let mark = <ReactMarkdown children={markdown} remarkPlugins={[remarkGfm]} />;
     await socket.emit("new_message", mark);
   };
 
@@ -92,7 +93,7 @@ function Chat({ socket, roomName }) {
             }}
           ></input>
           <button onClick={submit}>등록</button>
-          <button onClick={codeblock}>코드</button>
+          <button onClick={markdownRenderer}>코드</button>
         </div>
       </div>
     </div>
