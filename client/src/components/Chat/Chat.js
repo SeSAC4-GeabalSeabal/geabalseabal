@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import "./Chat.scss";
+import dayjs from "dayjs";
 
   function Chat({socket, roomName}) {
     // 내가 지금 1일 때. scss 편하게하는 법.
@@ -22,7 +23,8 @@ import "./Chat.scss";
       socket.on("new_message", (nickname, message) => {
         let chat = {
           name : nickname, 
-          message : message
+          message : message,
+          time: dayjs().format("A HH:mm"),
         }
         setChatArr((prevList) => [...prevList, chat]);
       });
@@ -50,15 +52,17 @@ import "./Chat.scss";
       const message = inputRef.current.children[0].value;
       await socket.emit("new_message", message, roomName);
     }
+
     return (
       <div className="ChatApp">
         <div className="Box">
           <div className="ChatBox">
             {chatArr.map((e) => (
               <div className="Chat">
-                <div>{e.content}</div> 
+                <div className="inout_msg">{e.content}</div> 
                 <div>{e.name}</div> 
                 <div className="ChatLog">{e.message}</div>
+                <div className="chatTime">{e.time}</div>
               </div>
             ))}
           </div>

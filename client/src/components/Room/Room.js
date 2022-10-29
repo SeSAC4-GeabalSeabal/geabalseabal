@@ -318,7 +318,6 @@ export default Room;
 //<a href="https://www.freepik.com/free-vector/variety-online-courses-with-teachers_8111091.htm#page=13&query=computer&position=19&from_view=search&track=sph">Image by pikisuperstar</a> on Freepik
 //<a href="https://www.freepik.com/free-vector/flat-happy-people-celebrate-birthday-online-party-via-internet_24817776.htm#page=15&query=computer&position=13&from_view=search&track=sph">Image by redgreystock</a> on Freepik
 
-//<a href="https://www.flaticon.com/free-icons/professions-and-jobs" title="professions and jobs icons">Professions and jobs icons created by Icongeek26 - Flaticon</a>
 
 
 
