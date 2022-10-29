@@ -13,6 +13,7 @@ const Room = () => {
   const [playing, setPlaying] = useState({ video: true, audio: true });
   const [roomName, setRoomname] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
+  const [MyPeerConnection, setMyPeerConnection] = useState(null);
 
   const videoRef = useRef(null); // 비디오
   const inputRef = useRef(null); // 방이름(방장인 경우)
@@ -88,13 +89,15 @@ const Room = () => {
     myPeerConnection.addEventListener("icecandidate", handleIce);
     myPeerConnection.addEventListener("addstream", handleAddStream);
     myStream
-      .getTracks()
-      .forEach((track) => myPeerConnection.addTrack(track, myStream));
+    .getTracks()
+    .forEach((track) => myPeerConnection.addTrack(track, myStream));
+    setMyPeerConnection(myPeerConnection);
   }
 
   // ice 전달
   socket.on("ice", (ice) => {
     myPeerConnection.addIceCandidate(ice);
+    setMyPeerConnection(myPeerConnection);
   });
 
   // iceCandidate EventListener
@@ -118,6 +121,7 @@ const Room = () => {
     const offer = await myPeerConnection.createOffer();
     myPeerConnection.setLocalDescription(offer);
     socket.emit("offer", offer, roomname == undefined ? roomName : roomname);
+    setMyPeerConnection(myPeerConnection);
   });
   // 나중 유저: 오퍼 받고, answer 보낸다
   socket.on("offer", async (offer) => {
@@ -125,15 +129,13 @@ const Room = () => {
     const answer = await myPeerConnection.createAnswer();
     myPeerConnection.setLocalDescription(answer);
     socket.emit("answer", answer, roomname == undefined ? roomName : roomname);
+    setMyPeerConnection(myPeerConnection);
   });
   // 처음 유저: answer 받음
   socket.on("answer", async (answer) => {
     myPeerConnection.setRemoteDescription(answer);
+    setMyPeerConnection(myPeerConnection);
   });
-  // socket.on("result", (result) => {
-  //   if (!result.result) alert(result.msg);
-  //   else eventDo(result.roomname);
-  // });
 
   // start, stop 버튼 이벤트
   const startOrStop = async (media) => {
@@ -148,17 +150,26 @@ const Room = () => {
         videoRef.current.srcObject = stream;
       });
     }
-    changeState(media);
-    /* 수정 중 구역 */
-    // 변경사항 steam에 저장하여 보내기
-    // myStream = await navigator.mediaDevices.getUserMedia(playing)
-    // 변경 사항 stream에 저장 써보는 중
-    // if (myPeerConnection) {
-    //   const mediaSender = myPeerConnection
-    //     .getSenders()
-    //     .find((sender) => sender.track.kind = `${media}`);
-    //   console.log('Sender : ', mediaSender);
+    await changeState(media);
+
+    // 캠 peer 연결 후 안되는 부분 해결중
+    const newStream = await navigator.mediaDevices.getUserMedia(playing);
+    myPeerConnection = MyPeerConnection;
+    // 시도 1
+    // for (const track of newStream.getTracks()) {
+    //   myPeerConnection.addTrack(track, newStream);
     // }
+    // 시도 2
+    // console.log('newStream', newStream); 
+    const videoTrack = newStream.getTracks()[1]
+    console.log('videoTrack', videoTrack);
+    const videoSender = myPeerConnection? myPeerConnection: myPeerConnection
+      .getSenders()
+      .find((sender) => sender.track.kind === 'video');
+    console.log('videoSender', videoSender);
+    videoSender.replaceTrack(videoTrack);
+    console.log('success');
+
     // 카메라 변경 예시 코드
     // if(myPeerConnection) {
     //   const videoTrack = myStream.getVideoTracks()[0]
