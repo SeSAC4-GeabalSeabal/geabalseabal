@@ -8,10 +8,10 @@ import $ from 'jquery';
   function Chat({socket, roomName}) {
 
     const [chatArr, setChatArr] = useState([]);
-    const inputRef = useRef(null); // 채팅 내용
+    const inputRef = useRef(null); //채팅 내용
     
     useEffect(() => {
-      // 닉네임 및 메세지 받는 부분
+      //닉네임 및 메세지 받는 부분
       socket.on("new_message", (nickname, message) => {
         let chat = {
           name : nickname, 
@@ -42,7 +42,7 @@ import $ from 'jquery';
       }, []);
 
     const submit = async () => {
-      // 메세지 및 룸네임 보내기
+      //메세지 및 룸네임 보내기
       const message = inputRef.current.children[0].value;
       await socket.emit("new_message", message, roomName);
       //input창 전송 후 빈값되게 하기
