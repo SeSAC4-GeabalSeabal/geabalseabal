@@ -1,7 +1,8 @@
-import React, {useEffect, useState, useRef } from "react";
+import React, {useEffect, useState, useRef, useCallback, Component } from "react";
 import { io } from "socket.io-client";
 import "./Chat.scss";
 import dayjs from "dayjs";
+import { renderMatches } from "react-router-dom";
 
   function Chat({socket, roomName}) {
     // 내가 지금 1일 때. scss 편하게하는 법.
@@ -53,6 +54,14 @@ import dayjs from "dayjs";
       await socket.emit("new_message", message, roomName);
     }
 
+    //새 메시지 입력시 채팅 스크롤이 밑으로 이동해야 하는데 전체 화면 스크롤이 밑으로 내려감...
+    // const scrollToBottom = () => {
+    //   inputRef.current?.scrollIntoView({behavior:"smooth"});
+    // };
+    // useEffect(() => {
+    //   scrollToBottom();
+    // },[chatArr]);
+
     return (
       <div className="ChatApp">
         <div className="Box">
@@ -67,9 +76,10 @@ import dayjs from "dayjs";
             ))}
           </div>
           <div className="InputBox" ref={inputRef}>
-            <input placeholder="Type your message here..." onKeyPress={(e) => {
-              if(window.event.keyCode===13){submit();}
-            }} ></input>
+            <input placeholder="Type your message here..."
+              onKeyPress={(e) => {
+                if(window.event.keyCode===13){submit();}
+                inputRef.current.children[0].value = "";}} ></input>
             <button onClick={ submit }>SEND</button>
           </div>
         </div>
@@ -81,44 +91,15 @@ import dayjs from "dayjs";
 
 
 
-// function Chat({socket, roomName}) {
-//   const [chatArr, setChatArr] = useState([]);
-//   const inputRef = useRef(null); // 채팅 내용
 
-//   useEffect(() => {
-//     // 닉네임 및 메세지 받는 부분
-//     socket.on("new_message", (nickname, message) => {
-//       let chat = {
-//         name : nickname, 
-//         message : message
-//       }
-//       setChatArr((prevList) => [...prevList, chat]);
-//     }); 
-//   }, []);
-//   const submit = async () => {
-//     // 메세지 및 룸네임 보내기
-//     const message = inputRef.current.children[0].value;
-//     await socket.emit("new_message", message, roomName); 
-//   }
-//   return (
-//     <div className="ChatApp">
-//       <div className="Box">
-//         <div className="ChatBox">
-//           {chatArr.map((e) => (
-//             <div className="Chat">
-//               <div>{e.name}</div>
-//               <div className="ChatLog">{e.message}</div>
-//             </div>
-//           ))}
-//         </div>
-//         <div className="InputBox" ref={inputRef}>
-//           <input placeholder="내용"></input>
-//           <button onClick={ submit }>등록</button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
 
-// export default Chat;
+  // const scrollToBottom = () => {
+  //   if(inputRef.current){
+  //     inputRef.current.scrollTop = inputRef.current.scrollHeight;
+  //   }
+  // };
+  // useEffect(() => {
+  //   scrollToBottom();
+  // },[chatArr]);
+
 
