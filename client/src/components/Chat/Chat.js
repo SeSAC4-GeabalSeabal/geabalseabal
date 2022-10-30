@@ -4,7 +4,7 @@ import "./Chat.scss";
 // import Markdown from "../../lib/Markdown";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import SyntaxHighlighter from "react-syntax-highlighter";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 
 function Chat({ socket, roomName }) {
   // 내가 지금 1일 때. scss 편하게하는 법.
@@ -22,10 +22,10 @@ function Chat({ socket, roomName }) {
 
   useEffect(() => {
     // 닉네임 및 메세지 받는 부분
-    socket.on("new_message", (nickname, message, mark) => {
+    socket.on("new_message", (nickname, message, markdown) => {
       let chat = {
         name: nickname,
-        message: message || mark,
+        message: message && markdown,
       };
       setChatArr((prevList) => [...prevList, chat]);
     });
@@ -50,18 +50,33 @@ function Chat({ socket, roomName }) {
 
   const submit = async () => {
     // 메세지 및 룸네임 보내기
-    const message = inputRef.current.children[1].value;
+    const message = inputRef.current.children[0].value;
     await socket.emit("new_message", message, roomName);
   };
   // 마크다운 렌더링 하기
   const markdownRenderer = async () => {
-    const language = inputRef.current.children[0].value;
-    const message = inputRef.current.children[1].value;
-    const markdown = ```${language} 
-      ${message}
-      ```;
-    let mark = <ReactMarkdown children={markdown} remarkPlugins={[remarkGfm]} />;
-    await socket.emit("new_message", mark);
+    const message = `${inputRef.current.children[0].value}`;
+    let markdown = (
+      // 마크다운 렌더링 부분
+      <ReactMarkdown
+        children={message}
+        remarkPlugins={[remarkGfm]}
+        components={{
+          code({ node, inline, className, children, ...props }) {
+            const match = /language-(\w+)/.exec(className || "");
+            return !inline && match ? (
+              // 프로그래밍 언어별 신택스에 스타일 주는거.
+              <SyntaxHighlighter children={String(children).replace(/\n$/, "")} language={match[1]} {...props} />
+            ) : (
+              <code className={className} {...props}>
+                {children}
+              </code>
+            );
+          },
+        }}
+      />
+    );
+    await socket.emit("new_message", markdown);
   };
 
   return (
@@ -77,23 +92,16 @@ function Chat({ socket, roomName }) {
           ))}
         </div>
         <div className="InputBox" ref={inputRef}>
-          <select>
-            <option value="Javascript">Javascript</option>
-            <option value="Python">Python</option>
-            <option value="HTML">HTML</option>
-          </select>
           <input
             type="text"
             placeholder="내용"
             onKeyPress={(e) => {
               if (window.event.keyCode === 13) {
                 submit();
-                codeblock();
               }
             }}
           ></input>
           <button onClick={submit}>등록</button>
-          <button onClick={markdownRenderer}>코드</button>
         </div>
       </div>
     </div>
