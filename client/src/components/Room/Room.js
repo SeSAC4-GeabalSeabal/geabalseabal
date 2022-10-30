@@ -32,6 +32,7 @@ const Room = () => {
       NickName = guestRef.current.children[0].value;
 
       eventDo(NickName);
+
     } else {
       roomname = inputRef.current.children[0].value;
       NickName = inputRef.current.children[1].value;
@@ -44,7 +45,14 @@ const Room = () => {
       socket.on("checkResult", (result) => {
         if (result.result) eventDo(NickName);
         else alert(result.msg);
+
       });
+    }
+    if (inputRef.current) {
+      inputRef.current.style.display = 'none';
+    }
+    if (guestRef.current) {
+      guestRef.current.style.display = 'none';
     }
   }
   async function eventDo(NickName) {
