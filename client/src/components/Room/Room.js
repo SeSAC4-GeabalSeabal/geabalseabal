@@ -155,12 +155,6 @@ const Room = () => {
     // 캠 peer 연결 후 안되는 부분 해결중
     const newStream = await navigator.mediaDevices.getUserMedia(playing);
     myPeerConnection = MyPeerConnection;
-    // 시도 1
-    // for (const track of newStream.getTracks()) {
-    //   myPeerConnection.addTrack(track, newStream);
-    // }
-    // 시도 2
-    // console.log('newStream', newStream); 
     const videoTrack = newStream.getTracks()[1]
     console.log('videoTrack', videoTrack);
     const videoSender = MyPeerConnection
@@ -168,15 +162,6 @@ const Room = () => {
       videoSender.replaceTrack(videoTrack);
     console.log('videoSender', videoSender);
     console.log('success');
-
-    // 카메라 변경 예시 코드
-    // if(myPeerConnection) {
-    //   const videoTrack = myStream.getVideoTracks()[0]
-    //   const videoSender = myPeerConnection
-    //     .getSenders()
-    //     .find((sender) => sender.track.kind === 'video');
-    //   videoSender.replaceTrack(videoTrack);
-    // }
   };
 
   // on&off위하여 setPlaying 값 변환 함수
