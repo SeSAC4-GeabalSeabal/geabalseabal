@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import "./Chat.scss";
 import dayjs from "dayjs";
 import { renderMatches } from "react-router-dom";
+import $ from 'jquery';
 
   function Chat({socket, roomName}) {
     // 내가 지금 1일 때. scss 편하게하는 법.
@@ -28,6 +29,7 @@ import { renderMatches } from "react-router-dom";
           time: dayjs().format("A HH:mm"),
         }
         setChatArr((prevList) => [...prevList, chat]);
+        $('.ChatBox').scrollTop($('.ChatBox')[0].scrollHeight);
       });
 
       //입장 메시지
