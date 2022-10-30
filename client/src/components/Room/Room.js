@@ -6,6 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import GetWebcam from "../getWebCam/GetWebCam";
 import GetWebScreen from "../getWebScreen/GetWebScreen";
 import Room4 from '../img/Room4.jpg';
+import { Link } from 'react-router-dom';
 
 const socket = io.connect("http://localhost:8000");
 
@@ -84,19 +85,6 @@ const Room = () => {
         setRoomname(roomname);
       });
     }
-
-    //room 나가기 버튼
-    // if (
-    //   searchParams.get("roomname") != null ||
-    //   searchParams.get("roomname") != undefined
-    // )
-    //   socket.on("leave", (r) => {
-    //   roomname = r;
-    //   const {roomname} = r;
-    //   io.sockets.in(roomname).emit("leave");
-    //   socket.leave(roomname);
-    // });
-
   }, []);
 
   // RTC Code(실제로 연결을 만드는 함수)
@@ -157,6 +145,14 @@ const Room = () => {
     myPeerConnection.setRemoteDescription(answer);
     setMyPeerConnection(myPeerConnection);
   });
+
+  //방 나가기
+  // socket.on("leave", (r) => {
+  //   roomname = r;
+  //   const {roomname} = r;
+  //   io.sockets.in(roomname).emit("leave");
+  //   socket.leave(roomname);
+  // });
 
   // start, stop 버튼 이벤트
   const startOrStop = async (media) => {
@@ -286,13 +282,17 @@ const Room = () => {
       
       {/* {searchParams.get("roomname")(
         <div className="leave" id="roomData" ref={inputRef}>
-          <button onClick={event}>나가기</button>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <p>나가기</p>
+          </Link>
         </div>
       )};
 
       {searchParams.get("roomname")(
         <div className="leave" id="guestData" ref={guestRef}>
-          <button onClick={event}>나가기</button>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <p>나가기</p>
+          </Link>
         </div>
       )}; */}
 
