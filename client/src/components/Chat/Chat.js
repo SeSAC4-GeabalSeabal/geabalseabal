@@ -44,6 +44,8 @@ import $ from 'jquery';
       // 메세지 및 룸네임 보내기
       const message = inputRef.current.children[0].value;
       await socket.emit("new_message", message, roomName);
+
+      inputRef.current.children[0].value = "";
     }
 
     return (
@@ -61,9 +63,7 @@ import $ from 'jquery';
           </div>
           <div className="InputBox" ref={inputRef}>
             <input placeholder="Type your message here..."
-              onKeyPress={(e) => {
-                if(window.event.keyCode===13){submit();}
-                inputRef.current.children[0].value = "";}} ></input>
+              onKeyPress={(e) => {if(window.event.keyCode===13){submit();}}} ></input>
             <button onClick={ submit }>SEND</button>
           </div>
         </div>
