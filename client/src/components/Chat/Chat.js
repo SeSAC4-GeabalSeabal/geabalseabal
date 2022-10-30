@@ -62,6 +62,13 @@ import { renderMatches } from "react-router-dom";
     //   scrollToBottom();
     // },[chatArr]);
 
+    // const handleClick = () => {
+    //   inputRef.current.scrollIntoView({behavior:'smooth'});
+    // };
+    // useEffect(()=>{
+    //   handleClick();
+    // },[chatArr]);
+
     return (
       <div className="ChatApp">
         <div className="Box">
@@ -85,7 +92,7 @@ import { renderMatches } from "react-router-dom";
         </div>
       </div>
     );
-  }
+  };
 
   export default Chat;
 
