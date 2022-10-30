@@ -163,11 +163,10 @@ const Room = () => {
     // console.log('newStream', newStream); 
     const videoTrack = newStream.getTracks()[1]
     console.log('videoTrack', videoTrack);
-    const videoSender = myPeerConnection? myPeerConnection: myPeerConnection
-      .getSenders()
-      .find((sender) => sender.track.kind === 'video');
+    const videoSender = MyPeerConnection
+      .getSenders()[1]
+      videoSender.replaceTrack(videoTrack);
     console.log('videoSender', videoSender);
-    videoSender.replaceTrack(videoTrack);
     console.log('success');
 
     // 카메라 변경 예시 코드
@@ -328,8 +327,3 @@ export default Room;
 //<a href="https://www.freepik.com/free-vector/vector-set-social-media-icons_3425296.htm#page=12&query=computer&position=20&from_view=search&track=sph">Image by rawpixel.com</a> on Freepik
 //<a href="https://www.freepik.com/free-vector/variety-online-courses-with-teachers_8111091.htm#page=13&query=computer&position=19&from_view=search&track=sph">Image by pikisuperstar</a> on Freepik
 //<a href="https://www.freepik.com/free-vector/flat-happy-people-celebrate-birthday-online-party-via-internet_24817776.htm#page=15&query=computer&position=13&from_view=search&track=sph">Image by redgreystock</a> on Freepik
-
-
-
-
-
