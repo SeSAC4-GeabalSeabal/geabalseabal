@@ -19,6 +19,7 @@ const Room = () => {
   const videoRef = useRef(null); // 비디오
   const inputRef = useRef(null); // 방이름(방장인 경우)
   const guestRef = useRef(null); // 방이름(방장인 경우)
+  const screenRef = useRef(null);
 
   let roomname;
   let myStream;
@@ -190,8 +191,11 @@ const Room = () => {
   };
 
   // 화면 공유 기능 시작
-  const screenShare = () => {
-    GetWebScreen();
+  const screenShare = async() => {
+    await GetWebScreen((mediaStream) => {
+      console.log(mediaStream);
+      screenRef.current.srcObject = mediaStream; 
+    });
   };
 
   // 카카오톡 sdk 추가
@@ -298,14 +302,18 @@ const Room = () => {
 
       <div className="WebCam">
         <div className="videoApp">
-          <div className="videoBox">
-            <video ref={videoRef} autoPlay />
-          </div>{" "}
           {/* 내 화면*/}
           <div className="videoBox">
-            <video id="guestVedio" autoPlay />
-          </div>{" "}
+            <video ref={videoRef} autoPlay />
+          </div>
           {/* 상대 화면*/}
+          <div className="videoBox">
+            <video id="guestVedio" autoPlay />
+          </div>
+          {/* 화면공유 */}
+          <div className="videoBox">
+            <video ref={screenRef} autoPlay/>
+          </div>
           {/* on&off 버튼 및 화면공유 버튼 */}
           <div className="videobutton">
             <button onClick={() => startOrStop("video")}>

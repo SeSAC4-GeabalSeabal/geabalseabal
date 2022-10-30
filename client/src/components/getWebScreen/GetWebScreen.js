@@ -1,4 +1,4 @@
-const GetWebScreen = async () => {
+const GetWebScreen = async (callback) => {
   try {
     const constraints = {
       video: {
@@ -7,7 +7,8 @@ const GetWebScreen = async () => {
       },
       audio: false,
     }
-    navigator.mediaDevices.getDisplayMedia(constraints); 
+    navigator.mediaDevices.getDisplayMedia(constraints)
+      .then(callback);
   } catch(e) {
     console.log(e);
     return undefined;
