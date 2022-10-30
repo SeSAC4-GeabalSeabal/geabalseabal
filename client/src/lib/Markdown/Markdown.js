@@ -1,6 +1,8 @@
 import React, { useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 const Markdown = React.memo(({ linkStopPropagation, ...props }) => {
   const handleLinkClick = useCallback((event) => {
@@ -14,7 +16,7 @@ const Markdown = React.memo(({ linkStopPropagation, ...props }) => {
       link: linkRenderer,
     };
   }
-  return <ReactMarkdown {...props} remarkPlugins={[remarkGfm]} components={renderers} />;
+  return <SyntaxHighlighter language="javascript" style={docco} {...props} remarkPlugins={[remarkGfm]} components={renderers} />;
 });
 
 export default Markdown;
