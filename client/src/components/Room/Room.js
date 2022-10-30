@@ -84,6 +84,19 @@ const Room = () => {
         setRoomname(roomname);
       });
     }
+
+    //room 나가기 버튼
+    // if (
+    //   searchParams.get("roomname") != null ||
+    //   searchParams.get("roomname") != undefined
+    // )
+    //   socket.on("leave", (r) => {
+    //   roomname = r;
+    //   const {roomname} = r;
+    //   io.sockets.in(roomname).emit("leave");
+    //   socket.leave(roomname);
+    // });
+
   }, []);
 
   // RTC Code(실제로 연결을 만드는 함수)
@@ -270,6 +283,19 @@ const Room = () => {
       ) : (
         ""
       )}
+      
+      {/* {searchParams.get("roomname")(
+        <div className="leave" id="roomData" ref={inputRef}>
+          <button onClick={event}>나가기</button>
+        </div>
+      )};
+
+      {searchParams.get("roomname")(
+        <div className="leave" id="guestData" ref={guestRef}>
+          <button onClick={event}>나가기</button>
+        </div>
+      )}; */}
+
       <div className="WebCam">
         <div className="videoApp">
           <div className="videoBox">

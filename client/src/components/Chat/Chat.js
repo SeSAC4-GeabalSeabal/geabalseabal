@@ -19,6 +19,7 @@ import $ from 'jquery';
           time: dayjs().format("A HH:mm"),
         }
         setChatArr((prevList) => [...prevList, chat]);
+        //메시지 창 스크롤 최신 메시지에 고정
         $('.ChatBox').scrollTop($('.ChatBox')[0].scrollHeight);
       });
 
@@ -44,7 +45,7 @@ import $ from 'jquery';
       // 메세지 및 룸네임 보내기
       const message = inputRef.current.children[0].value;
       await socket.emit("new_message", message, roomName);
-
+      //input창 전송 후 빈값되게 하기
       inputRef.current.children[0].value = "";
     }
 
