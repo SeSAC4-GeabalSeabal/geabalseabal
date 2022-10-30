@@ -126,6 +126,10 @@ io.on("connection", (socket) => {
       socket.to(room).emit("bye", socket.nickname)
     );
   });
+  // 방떠나기
+  socket.on("leave", (roomName) => {
+    socket.leave(roomName);
+  });
 });
 
 /* sever listen */
