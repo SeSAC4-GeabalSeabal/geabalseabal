@@ -1,10 +1,17 @@
-import React, { useEffect, useState, useRef, useCallback, Component } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  Component,
+} from "react";
 import { io } from "socket.io-client";
 import "./Chat.scss";
 import dayjs from "dayjs";
 import { renderMatches } from "react-router-dom";
 import $ from "jquery";
 import Markdown from "../../lib/Markdown";
+import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
 
 function Chat({ socket, roomName }) {
   const [chatArr, setChatArr] = useState([]);
