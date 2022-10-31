@@ -2,11 +2,10 @@ import io from "socket.io-client";
 import Chat from "../Chat/Chat";
 import "./Room.scss";
 import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import GetWebcam from "../getWebCam/GetWebCam";
 import GetWebScreen from "../getWebScreen/GetWebScreen";
 import Room4 from '../img/Room4.jpg';
-import { Link } from 'react-router-dom';
 
 const socket = io.connect("http://localhost:8000");
 
@@ -16,10 +15,13 @@ const Room = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [MyPeerConnection, setMyPeerConnection] = useState(null);
 
+  const navigate = useNavigate();
+
   const videoRef = useRef(null); // 비디오
   const inputRef = useRef(null); // 방이름(방장인 경우)
   const guestRef = useRef(null); // 방이름(방장인 경우)
   const screenRef = useRef(null);
+  const buttonRef = useRef(null); //나가기 버튼
 
   let roomname;
   let myStream;
@@ -50,13 +52,18 @@ const Room = () => {
 
       });
     }
+
+    //입장하면 방 이름, 닉네임 input창, 입장 버튼 hidden
     if (inputRef.current) {
       inputRef.current.style.display = 'none';
     }
     if (guestRef.current) {
       guestRef.current.style.display = 'none';
     }
+    //나가기 버튼
+    buttonRef.current.style.display = 'flex';
   }
+
   async function eventDo(NickName) {
     // 캠 공유 시작
     await GetWebcam(playing, (stream) => {
@@ -147,13 +154,13 @@ const Room = () => {
     setMyPeerConnection(myPeerConnection);
   });
 
-  //방 나가기
-  // socket.on("leave", (r) => {
-  //   roomname = r;
-  //   const {roomname} = r;
-  //   io.sockets.in(roomname).emit("leave");
-  //   socket.leave(roomname);
-  // });
+  //방 나가기 //카메라는 꺼지지 않음...
+  const leave = () => {
+    //클라이언트한테 보내는 것은 emit //roomname 받아서
+    socket.emit('leave', roomname);
+    //navigate 이용해서 버튼 클릭 시 홈 화면으로 이동
+    navigate('/');
+  }
 
   // start, stop 버튼 이벤트
   const startOrStop = async (media) => {
@@ -266,7 +273,7 @@ const Room = () => {
             placeholder="닉네임을 정해주세요"
             name="NickName"
           ></input>
-          <button onClick={event}>입장</button>
+          <button className="inbtn" onClick={event}>입장</button>
         </div>
       ) : (
         ""
@@ -278,27 +285,15 @@ const Room = () => {
             placeholder="닉네임을 정해주세요"
             name="NickName"
           ></input>
-          <button onClick={event}>입장</button>
+          <button className="inbtn" onClick={event}>입장</button>
         </div>
       ) : (
         ""
       )}
-      
-      {/* {searchParams.get("roomname")(
-        <div className="leave" id="roomData" ref={inputRef}>
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <p>나가기</p>
-          </Link>
-        </div>
-      )};
-
-      {searchParams.get("roomname")(
-        <div className="leave" id="guestData" ref={guestRef}>
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <p>나가기</p>
-          </Link>
-        </div>
-      )}; */}
+      {/* leave 이벤트, 처음에 보이지 않게 hidden */}
+      <button className="leavebtn" ref={buttonRef} onClick={leave} style={{display: 'none'}}>
+        나가기
+      </button>
 
       <div className="WebCam">
         <div className="videoApp">
