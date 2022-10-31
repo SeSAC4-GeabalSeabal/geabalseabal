@@ -68,6 +68,7 @@ io.on("connection", (socket) => {
   socket["nickname"] = "익명"; // 기본 닉네임
 
   socket.on("check_room", (roomName) => {
+    console.log( socket.id );
     if (socket.adapter.rooms.get(roomName) != undefined) {
       socket.emit("checkResult", {
         result: false,

@@ -21,6 +21,9 @@ const Room = () => {
   const guestRef = useRef(null); // 방이름(방장인 경우)
   const screenRef = useRef(null);
 
+  const peerRef = useRef();
+  const senders = useRef([]);
+
   let roomname;
   let myStream;
   let myPeerConnection; 
@@ -100,7 +103,9 @@ const Room = () => {
     myPeerConnection.addEventListener("addstream", handleAddStream);
     myStream
     .getTracks()
-    .forEach((track) => myPeerConnection.addTrack(track, myStream));
+    .forEach((track) =>{ 
+      senders.current.push(myPeerConnection.addTrack(track, myStream));
+     });
     setMyPeerConnection(myPeerConnection);
   }
 
@@ -192,10 +197,18 @@ const Room = () => {
 
   // 화면 공유 기능 시작
   const screenShare = async() => {
-    await GetWebScreen((mediaStream) => {
-      console.log(mediaStream);
-      screenRef.current.srcObject = mediaStream; 
-    });
+    navigator.mediaDevices.getDisplayMedia({cursor: true}).then(stream => {
+      const screenTrack = stream.getTracks()[0];
+      senders.current.find((sender) => {return sender.track.kind === "video"}).replaceTrack(screenTrack);
+      
+      screenTrack.onended = function() {
+        senders.current.find(sender => sender.track.kind === "video").replaceTrack(myStream.getTracks()[1]);
+      }
+    })
+    // await GetWebScreen((mediaStream) => {
+    //   console.log(mediaStream);
+    //   screenRef.current.srcObject = mediaStream; 
+    // });
   };
 
   // 카카오톡 sdk 추가
