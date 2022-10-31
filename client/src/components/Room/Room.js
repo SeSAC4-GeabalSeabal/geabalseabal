@@ -334,7 +334,7 @@ const Room = () => {
           />
         </div>
         <div>
-          <img src={Room4} />
+          <img src={Room4} className="rimg"/>
         </div>
       </div>
     </div>

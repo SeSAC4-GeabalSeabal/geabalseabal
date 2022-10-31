@@ -50,7 +50,7 @@
         border: solid 1px rgb(85,26,139);
         //background-color: rgb(233, 233, 233);
         margin :10px;
-      }
+    }
 }
 
 .WebCam {
@@ -63,19 +63,12 @@
     border-radius: 5%;
     border: solid 3px rgb(249,175,136);
     //margin : 10px;
-    //background-color: rgb(108,92,216);
-    //background-color: rgb(249,175,136);
-    //background-color: rgb(220,212,249);
     video {
         border-radius: 5%;
         object-fit: cover;
         width: 30vw;
         height: 40vh;
-        // width: 40vw;
-        // height: 30vh;
-        //width: 524px;
-        //width: 36vw;
-     }
+    }
     }
 
     .videobutton{
@@ -94,8 +87,8 @@
             width: 4vw;
             height: 7vh;
             //height: 4vh;
-            border-radius: 1.5em;
-            font-size: 1em;
+            border-radius: 1.6em;
+            font-size: 1.2em;
             font-weight: 500;
             margin-top: 0.01em;
             margin-left: 0.5em;
@@ -110,21 +103,22 @@
 
 .Chat {
     display: flex;
-    width: 90%;
+    width: 60%;
     margin-bottom: 20px;
     //border: 1px solid #bcbcbc;
     position: relative;
     //float: right;
 }
 
-.img {
-    position: relative;
-    //width: 90%;
-    width: 50%;
+.rimg {
+    position: relative; 
+    width: 100%;
+    object-fit: contain;
+    //margin-right: 10%;
     display: flex;
     justify-content: space-between;
     z-index: -99;
-  }
+}
 
 @media screen and (max-width: 760px) and (min-width: 1px) {
     .RoomApp{
@@ -142,6 +136,6 @@
     .img {
         width: 100%;
         margin: 1.8rem 0;
-      }
+    }
 }
 }
