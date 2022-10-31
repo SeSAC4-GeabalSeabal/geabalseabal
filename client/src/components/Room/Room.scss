@@ -74,7 +74,9 @@
     font-size: 1.3em;
     font-weight: 500;
     margin-top: 0.01em;
-    margin-right: 91.5%;
+    padding: inherit;
+    min-width: 100px;
+    margin-right: 90%;
     &:hover{
         color: rgb(243,207,31);
     }
