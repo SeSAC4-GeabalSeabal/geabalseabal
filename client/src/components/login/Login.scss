@@ -89,15 +89,22 @@
 
   
 
-//   @media (max-width: 480px) {
+  @media (max-width: 480px) {
   
-//     .right {
-//       width: 100%;
-//       margin-top: 0px;
-//       padding-top: 30px;
-//       clip-path: polygon(0 0, 100% 0, 90% 90%, 0% 90%);
-//     }
-//   }
+    .right {
+      width: 100%;
+      margin-top: 0px;
+      padding-top: 30px;
+      clip-path: polygon(0 0, 100% 0, 90% 90%, 0% 90%);
+    }
+
+    .left {
+      width: 100%;
+      height: 50%;
+      margin-top: 0px;
+      padding-top: 30px;
+    }
+  }
   
 
 
@@ -114,8 +121,6 @@
 //     text-align: center;
 //     letter-spacing: 1px;
 //     position: relative;
- 
-
 // }
 
 // .Login h2 {

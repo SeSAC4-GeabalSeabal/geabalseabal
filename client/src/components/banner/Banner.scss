@@ -69,13 +69,16 @@
 
     @media screen and (max-width: 555px) {
         .banner-text h1 {
+          width: 100%;
           padding: 10px 20px;
         }
         .banner-text p {
+          width: 100%;
           font-size: 1.1rem;
           padding: 0rem 0 2rem 0;
         }
         .banner-text .show {
+          width: 100%;
           padding: 0.6rem 1.1rem;
           border-radius: 3px;
           font-size: 1rem;
