@@ -138,12 +138,16 @@
     //float: right;
 }
 
+.roomimg{
+    width: 100%;
+}
+
 .rimg {
     position: relative; 
-    width: 128%;
+    width: 113%;
     object-fit: contain;
     display: flex;
-    margin-left: -33%;
+    margin-left: -17%;
     margin-top: -5%;
     //justify-content: space-between;
     z-index: -99;
