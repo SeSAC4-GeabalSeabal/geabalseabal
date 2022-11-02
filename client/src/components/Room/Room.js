@@ -319,9 +319,9 @@ const Room = () => {
             <video id="guestVedio" autoPlay />
           </div>
           {/* 화면공유 */}
-          <div className="videoBox">
+          {/* <div className="videoBox">
             <video ref={screenRef} autoPlay/>
-          </div>
+          </div> */}
           {/* on&off 버튼 및 화면공유 버튼 */}
           <div className="videobutton">
             <button onClick={() => startOrStop("video")}>
