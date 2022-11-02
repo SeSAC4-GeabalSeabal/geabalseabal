@@ -341,7 +341,7 @@ const Room = () => {
             roomName={roomname == undefined ? roomName : roomname}
           />
         </div>
-        <div>
+        <div className="roomimg">
           <img src={Room4} className="rimg"/>
         </div>
       </div>
