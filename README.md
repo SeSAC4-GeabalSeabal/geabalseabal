@@ -6,11 +6,11 @@
 
 ## 팀 소개 
 |팀원명|담당 기능|
-|:--:|:--|
-[곽시하](https://github.com/SashaGwak)|model DB 설계 및 생성, google passport, Logout 기능, server socket.io 및 명세서 작성, 캠 및 오디오 기능 설정, WebRTC icecandidata 연결, 화면공유 기능 설정, Chat 메세지 기능, guest 분리 및 kakao 공유하기 기능, AWS(EC2) 배포 및 https 적용|
-|[김민지](https://github.com/mymj11)|Nav, Footer 생성, Main&Room&Login SCSS, Chat 메세지 기능|
-|[김예은](https://github.com/kimyeaeun96)|kakao passport, WebRTC offer&answer 생성, Chat 코드블럭 기능, 방인원 제한 기능|
-|[최상훈](https://github.com/choilettuce)|WebRTC 화면공유 sender, client socket.io 연동|
+|:-----:|:------|
+|[ 곽시하 ](https://github.com/SashaGwak)|model DB 설계 및 생성, google passport, Logout 기능, server socket.io 및 명세서 작성,<br> 캠 및 오디오 기능 설정, WebRTC icecandidata 연결, 화면공유 기능 설정, Chat 메세지 기능,<br> guest 분리 및 kakao 공유하기 기능, AWS(EC2) 배포 및 https 적용|
+|[ 김민지 ](https://github.com/mymj11)|Nav, Footer 생성, Main&Room&Login SCSS, Chat 메세지 기능|
+|[ 김예은 ](https://github.com/kimyeaeun96)|kakao passport, WebRTC offer&answer 생성, Chat 코드블럭 기능, 방인원 제한 기능|
+|[ 최상훈 ](https://github.com/choilettuce)|WebRTC 화면공유 sender, client socket.io 연동|
 
 ## DEMO 💻
 [📷 개발새발 페이지 살펴보기](https://sihaha.monster:3000/)
