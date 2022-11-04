@@ -1,50 +1,26 @@
-# gaebalsaebal
-개발자 커뮤니티 팀 프로젝트 
+# 개발새발(개발자의 새로운 길을 발견하다)
+실시간 회의, 화상공유 및 채팅(코드블럭 기능 지원)이 가능한 개발자 친화적 화상대화 사이트 
 
-# git pull request시 참고
-```
-git checkout develop
-git pull origin develop
-git checkout -b feature/피처이름
+## 서비스 소개
+<img width="928" alt="image" src="https://user-images.githubusercontent.com/92668655/199934955-915e66db-f0fe-44d8-807d-8c30a40a7441.png">
 
-작업
+## 팀 소개 
+|팀원명|담당 기능|
+|:--:|:--|
+[곽시하](https://github.com/SashaGwak)|model DB 설계 및 생성, google passport, Logout 기능, server socket.io 및 명세서 작성, 캠 및 오디오 기능 설정, WebRTC icecandidata 연결, 화면공유 기능 설정, Chat 메세지 기능, guest 분리 및 kakao 공유하기 기능, AWS(EC2) 배포 및 https 적용|
+|[김민지](https://github.com/mymj11)|Nav, Footer 생성, Main&Room&Login SCSS, Chat 메세지 기능|
+|[김예은](https://github.com/kimyeaeun96)|kakao passport, WebRTC offer&answer 생성, Chat 코드블럭 기능, 방인원 제한 기능|
+|[최상훈](https://github.com/choilettuce)|WebRTC 화면공유 sender, client socket.io 연동|
 
-git add .
-git commit -m "feat: 메세지"
-  ex) git commit -m "feat: Create register input"
-  ex) git commit -m "feat: Design register page"
-git push origin feature/피처이름
-
-New Pull Request 생성
-base : develop
-compare : 작업하신 feature
-
-Pull Request 생성 -> ( OPEN 상태 )
-MERGE 눌러서 꼭! MERGED 상태로 바꾸기!!!
-
-꼭 MERGED 완료 확인한 뒤!!! 
-
-git checkout develop 
-git branch -D feature/피쳐이름
-
-<!-- feature을 한 번 만들 때 작업은 최대 2일까지만. 오류 없이 만들어서 올려주세요. 무조건! -->
-<!-- feature은 작은 단위
-  ex) 회원가입 -> feature/register_ui, feature/register_insert -->
-```
+## DEMO 💻
+[📷 개발새발 페이지 살펴보기](https://sihaha.monster:3000/)
 
 
-# git 규칙 
-```markdown
-### Type
-feat : 새로운 기능 추가, 기존의 기능을 요구 사항에 맞추어 수정
-fix : 기능에 대한 버그 수정
-build : 빌드 관련 수정
-chore : 패키지 매니저 수정, 그 외 기타 수정 ex) .gitignore
-ci : CI 관련 설정 수정
-docs : 문서(주석) 수정
-style : 코드 스타일, 포맷팅에 대한 수정
-refactor : 기능의 변화가 아닌 코드 리팩터링 ex) 변수 이름 변경
-test : 테스트 코드 추가/수정
-release : 버전 릴리즈
+|구글 로그인, 카카오 로그인 기능|
+|:--:|
+|![로그인](https://user-images.githubusercontent.com/92668655/199899326-78c6ede5-e87a-4367-9298-868d4a4764e9.gif)|
 
-```
+
+|방 생성 및 카카오 공유 기능|
+|:--:|
+|![방생성 및 카카오공유](https://user-images.githubusercontent.com/92668655/199902130-8eb8b905-4c5c-455c-aea7-2d04b7a24d3e.gif)|
