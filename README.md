@@ -19,8 +19,3 @@
 |구글 로그인, 카카오 로그인 기능|
 |:--:|
 |![로그인](https://user-images.githubusercontent.com/92668655/199899326-78c6ede5-e87a-4367-9298-868d4a4764e9.gif)|
-
-
-|방 생성 및 카카오 공유 기능|
-|:--:|
-|![방생성 및 카카오공유](https://user-images.githubusercontent.com/92668655/199902130-8eb8b905-4c5c-455c-aea7-2d04b7a24d3e.gif)|
